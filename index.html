@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bridge Bidder</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade" id="hand">
+          <div class="row">
+            <div class="col-xs-3 black">
+              <button id="2s" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">2&#x2660;</button>
+              <button id="3s" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">3&#x2660;</button>
+              <button id="4s" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">4&#x2660;</button>
+              <button id="5s" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">5&#x2660;</button>
+              <button id="6s" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">6&#x2660;</button>
+              <button id="7s" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">7&#x2660;</button>
+              <button id="8s" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">8&#x2660;</button>
+              <button id="9s" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">9&#x2660;</button>
+              <button id="0s" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">10&#x2660;</button>
+              <button id="js" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">J&#x2660;</button>
+              <button id="qs" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">Q&#x2660;</button>
+              <button id="ks" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">K&#x2660;</button>
+              <button id="as" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">A&#x2660;</button>
+            </div>
+            <div class="col-xs-3 red">
+              <button id="2h" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">2&#x2665;</button>
+              <button id="3h" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">3&#x2665;</button>
+              <button id="4h" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">4&#x2665;</button>
+              <button id="5h" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">5&#x2665;</button>
+              <button id="6h" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">6&#x2665;</button>
+              <button id="7h" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">7&#x2665;</button>
+              <button id="8h" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">8&#x2665;</button>
+              <button id="9h" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">9&#x2665;</button>
+              <button id="0h" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">10&#x2665;</button>
+              <button id="jh" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">J&#x2665;</button>
+              <button id="qh" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">Q&#x2665;</button>
+              <button id="kh" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">K&#x2665;</button>
+              <button id="ah" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">A&#x2665;</button>
+            </div>
+            <div class="col-xs-3 red">
+              <button id="2d" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">2&#x2666;</button>
+              <button id="3d" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">3&#x2666;</button>
+              <button id="4d" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">4&#x2666;</button>
+              <button id="5d" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">5&#x2666;</button>
+              <button id="6d" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">6&#x2666;</button>
+              <button id="7d" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">7&#x2666;</button>
+              <button id="8d" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">8&#x2666;</button>
+              <button id="9d" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">9&#x2666;</button>
+              <button id="0d" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">10&#x2666;</button>
+              <button id="jd" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">J&#x2666;</button>
+              <button id="qd" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">Q&#x2666;</button>
+              <button id="kd" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">K&#x2666;</button>
+              <button id="ad" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">A&#x2666;</button>
+            </div>
+            <div class="col-xs-3 black">
+              <button id="2c" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">2&#x2663;</button>
+              <button id="3c" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">3&#x2663;</button>
+              <button id="4c" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">4&#x2663;</button>
+              <button id="5c" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">5&#x2663;</button>
+              <button id="6c" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">6&#x2663;</button>
+              <button id="7c" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">7&#x2663;</button>
+              <button id="8c" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">8&#x2663;</button>
+              <button id="9c" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">9&#x2663;</button>
+              <button id="0c" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">10&#x2663;</button>
+              <button id="jc" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">J&#x2663;</button>
+              <button id="qc" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">Q&#x2663;</button>
+              <button id="kc" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">K&#x2663;</button>
+              <button id="ac" type="button" class="card btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">A&#x2663;</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="panel-group" id="handacc" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                  <div class="panel-heading" role="tab">
+                    <p class="panel-title">
+                      <a role="button" data-toggle="collapse" data-parent="#handacc" href="#handacc1" aria-expanded="false" aria-controls="handacc1">Show Hand Stats</a>
+                    </p>
+                  </div>
+                  <div id="handacc1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="handacc1">
+                    <ul class="list-group">
+                      <li class="list-group-item">High Card Points: <span id="hcp">0</span></li>
+                      <li class="list-group-item">Distribution Points: <span id="dip">0</span></li>
+                      <li class="list-group-item">Dummy Points: <span id="dup">0</span></li>
+                      <li class="list-group-item">Balance Hand: <span id="bal">&#x2014;</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade text-center in active" id="bids">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="panel-group" id="bidacc" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="bidacc0h">
+                    <p class="panel-title">
+                      <a role="button" data-toggle="collapse" data-parent="#bidacc" href="#bidacc0" aria-expanded="true" aria-controls="bidacc0">Choose a Dealer</a>
+                    </p>
+                  </div>
+                  <div id="bidacc0" class="panel-collapse collapse in black" role="tabpanel" aria-labelledby="bidacc0">
+                    <button id="dealern" type="button" class="bid btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">N</button>
+                    <button id="dealere" type="button" class="bid btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">E</button>
+                    <button id="dealers" type="button" class="bid btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">S</button>
+                    <button id="dealerw" type="button" class="bid btn btn-muted" data-toggle="button" aria-pressed="false" autocomplete="off">W</button>
+                    <p>You're South, your partner is North, and East and West are your opponents on your right and left, respectively.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="story">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="panel-group" id="storyacc" role="tablist" aria-multiselectable="true">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="score">
+          <div class="row">
+            <div class="col-xs-12">
+              <button id="vuln" type="button" class="btn btn-muted vars" data-toggle="button" aria-pressed="false" autocomplete="off">Vulnerable</button>
+              <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-muted vars active"><input type="radio" name="dares" id="chicken" autocomplete="off" checked> Friendly</label>
+                <label class="btn btn-muted vars"><input type="radio" name="dares" id="double" autocomplete="off"> Double</label>
+                <label class="btn btn-muted vars"><input type="radio" name="dares" id="redouble" autocomplete="off"> Redouble</label>
+              </div>
+              <ul class="list-group" id="scoreexpl">
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" id="nav">
+        <div class="col-xs-12" role="navigation">
+          <ul class="nav nav-pills">
+            <li role="presentation" class="active"><a href="#bids" aria-controls="bids" role="tab" data-toggle="tab">Bids</a></li>
+            <li role="presentation"><a href="#story" aria-controls="story" role="tab" data-toggle="tab">Breakdown</a></li>
+            <li role="presentation"><a href="#score" aria-controls="hand" role="tab" data-toggle="tab">Scoring</a></li>
+            <li role="presentation"><a href="#hand" aria-controls="hand" role="tab" data-toggle="tab">Hand Eval.</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/hand.js"></script>
+    <script src="js/bids.js"></script>
+    <script src="js/story_library.js"></script>
+    <script src="js/story.js"></script>
+    <script src="js/score.js"></script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+ #nav { position: fixed; bottom: 0; height: 50px; background: white; }
+.tab-pane { margin-bottom: 50px; }
+.red, .red .focus, .red .btn:hover, .red.focus { color: red; }
+.black, .black .focus, .black .btn:hover { color: black; }
+.card, .bid { width: 50px; margin-bottom: 5px; }
+.red .active, .red.active { background: pink; }
+.black .active, .black.active, #score .active { background: lightgrey; }
+
+@media (max-width: 768px) {
+  .nav-justified > li {
+    display: table-cell;
+    width: 1%;
+  }
+  .nav-justified > li > a  {
+    border-bottom: 1px solid #ddd !important;
+    border-radius: 4px 4px 0 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
