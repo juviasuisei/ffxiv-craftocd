@@ -1,7 +1,7 @@
 {
-  "name": "bridge-bidder",
+  "name": "ffxiv-craftocd",
   "version": "1.0.0",
-  "description": "Bridge Bidding Assistant",
+  "description": "FFXIV Crafting OCD Checklist",
   "main": "index.js",
   "enginges": {
 	"node": "6.11.4"
@@ -18,12 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tsukinoooo/bridge-bidder.git"
+    "url": "git+https://github.com/tsukinoooo/ffxiv-craftocd.git"
   },
   "author": "Tsukinoooo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tsukinoooo/bridge-bidder/issues"
+    "url": "https://github.com/tsukinoooo/ffxiv-craftocd/issues"
   },
-  "homepage": "https://github.com/tsukinoooo/bridge-bidder#readme"
+  "homepage": "https://github.com/tsukinoooo/ffxiv-craftocd#readme"
 }
