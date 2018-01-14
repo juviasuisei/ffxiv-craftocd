@@ -7,7 +7,7 @@ app.use(cors());
 app.use(enforce.HTTPS({ trustProtoHeader: true }));
 app.use(express.static(__dirname + '/static'));
 
-app.get('translate', function(req, res) {
+app.get('/translate', function(req, res) {
 	res.sendFile(__dirname + '/translate.html');
 });
 app.get('*', function(req, res) {
