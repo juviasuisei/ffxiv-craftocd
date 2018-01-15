@@ -29,7 +29,7 @@ $('body').on('click', 'ul li a', function(event) {
               'quest' : 0
             };
           }
-          list[k3][v3.item].leve += v3.qty;
+          list[k3][v3.item].leve += parseInt(v3.qty);
         });
       }
     });
@@ -47,14 +47,16 @@ $('body').on('click', 'ul li a', function(event) {
               'quest' : 0
             };
           }
-          list[k][v3.item].leve += v3.qty;
+          list[k][v3.item].leve += parseInt(v3.qty);
         });
       }
     });
   });
   console.log(list);
   $.each(list, function(k,v) {
+    console.log(k);
     $.each(v, function(k2,v2) {
+      console.log(k2,v2);
       rows += '<tr>';
       rows += '<td>' + k + '</td>';
       rows += '<td>' + logs[k][k2].level + '</td>';
