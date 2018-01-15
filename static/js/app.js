@@ -52,8 +52,11 @@ $('body').on('click', 'ul li a', function(event) {
       }
     });
   });
+  console.log(list);
   $.each(list, function(k,v) {
+    console.log(k);
     $.each(v, function(k2,v2) {
+      console.log(k2,v2);
       rows += '<tr>';
       rows += '<td>' + k + '</td>';
       rows += '<td>' + logs[k][k2].level + '</td>';
