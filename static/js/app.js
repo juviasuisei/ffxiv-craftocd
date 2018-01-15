@@ -8,7 +8,7 @@ $('body').on('click', 'ul li a', function(event) {
       rows += '<td>' + v2.level + '</td>';
       rows += '<td>';
       rows += '<a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/';
-      rows += v2.api + '/" class="eorzeadb_link">';
+      rows += items[k2].api + '/" class="eorzeadb_link">';
       rows += items[k2].name + '</a></td>';
       rows += '</tr>';
     });
