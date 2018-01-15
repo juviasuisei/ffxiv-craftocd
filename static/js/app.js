@@ -76,10 +76,10 @@ function processTable(lvl) {
         var ocd = ('CUL' == k && v2.leve > 0 && v2.quest > 0 ? 0 : 1);
         var total = ocd + v2.leve + v2.quest;
         fullList[k][k2] = {
-          'total' = total,
-          'ocd' = ocd,
-          'leve' = v2.leve,
-          'quest' = v2.quest
+          'total' : total,
+          'ocd' : ocd,
+          'leve' : v2.leve,
+          'quest' : v2.quest
         };
       }
     });
