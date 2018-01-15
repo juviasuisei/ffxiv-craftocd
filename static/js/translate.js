@@ -9,6 +9,9 @@ $('body').on('click', '#translate', function(event) {
     case 'logs':
       translateLogs($('#data').val());
       break;
+    case 'nodes':
+      translateNodes($('#data').val());
+      break;
   }
 });
 
@@ -49,6 +52,31 @@ function translateLogs(data) {
   });
   displayJSON(temp_logs);
 }
+
+function translateNodes(data) {
+  var temp_nodes = {
+    'BTN' : { 'primary' : {}, 'secondary' : {} },
+    'MIN' : { 'primary' : {}, 'secondary' : {} }
+  };
+  $.each(data.split('\n'), function(k,r) {
+    var col = r.split('\t');
+    if(undefined == temp_nodes[col[0]][col[1]][col[2]]) {
+      temp_nodes[col[0]][col[1]][col[2]] = {};
+    }
+    if(undefined == temp_nodes[col[0]][col[1]][col[2]][col[3]]) {
+      temp_nodes[col[0]][col[1]][col[2]][col[3]] = {};
+    }
+    if(undefined == temp_nodes[col[0]][col[1]][col[2]][col[3]][col[4]]) {
+      temp_nodes[col[0]][col[1]][col[2]][col[3]][col[4]] = [];
+    }
+    temp_nodes[col[0]][col[1]][col[2]][col[3]][col[4]].append({
+      'level' : col[5],
+      'items' : findSeries(col[6], col[7], col[8], col[9], col[10], col[11], col[12], col[13])
+    });
+  });
+  displayJSON(temp_nodes);
+}
+
 function translateCrystals(data) {
   var temp_crystals = {};
   $.each(data.split('\n'), function(k,r) {
@@ -89,6 +117,15 @@ function splitSeries() {
   while(undefined != arguments[i] && '' != arguments[i]) {
     sets[findID(arguments[i + 1])] = arguments[i];
     i += 2;
+  }
+  return(sets);
+}
+
+function findSeries() {
+  var sets = [];
+  i = 0
+  while(undefined != arguments[i] && '' != arguments[i]) {
+    sets.append(findID(arguments[i++]));
   }
   return(sets);
 }
