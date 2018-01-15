@@ -1,3 +1,5 @@
+processTable(5);
+
 $('body').on('click', 'ul li a', function(event) {
   var lvl = parseInt($(this).attr('id').substr(3));
   processTable(lvl);
