@@ -18,6 +18,9 @@ $('body').on('click', '#translate', function(event) {
     case 'leves':
       translateLeves($('#data').val());
       break;
+    case 'quests':
+      translateQuests($('#data').val());
+      break;
   }
 });
 
@@ -121,6 +124,30 @@ function translateLeves(data) {
     });
   });
   displayJSON(temp_leves);
+}
+
+function translateQuests(data) {
+  var temp_quests = {
+    'CRP' : {},
+    'BSM' : {},
+    'ARM' : {},
+    'GSM' : {},
+    'LTW' : {},
+    'WVR' : {},
+    'ALC' : {},
+    'CUL' : {}
+  };
+  $.each(data.split('\n'), function(k,r) {
+    var col = r.split('\t');
+    if(undefined == temp_quests[col[0]][col[1]]) {
+      temp_quests[col[0]][col[1]] = [];
+    }
+    temp_quests[col[0]][col[1]].push = {
+      'qty' : col[2],
+      'item' : findID(col[3])
+    }
+  });
+  displayJSON(temp_quests);
 }
 
 function translateCrystals(data) {
