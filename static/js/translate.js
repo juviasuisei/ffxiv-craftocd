@@ -107,18 +107,19 @@ function translateLeves(data) {
     var col = r.split('\t');
     if(undefined == temp_leves[col[0]]) {
       temp_leves[col[0]] = {
+        'items' : {},
         'region' : col[1],
         'map' : col[2],
         'x' : col[4],
         'y' : col[5]};
     }
-    if(undefined == temp_leves[col[0]][col[3]]) {
-      temp_leves[col[0]][col[3]] = {};
+    if(undefined == temp_leves[col[0]].items[col[3]]) {
+      temp_leves[col[0]].items[col[3]] = {};
     }
-    if(undefined == temp_leves[col[0]][col[3]][col[6]]) {
-      temp_leves[col[0]][col[3]][col[6]] = [];
+    if(undefined == temp_leves[col[0]].items[col[3]][col[6]]) {
+      temp_leves[col[0]].items[col[3]][col[6]] = [];
     }
-    temp_leves[col[0]][col[3]][col[6]].push({
+    temp_leves[col[0]].items[col[3]][col[6]].push({
       'qty' : col[7],
       'item' : findID(col[8])
     });
