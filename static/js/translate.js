@@ -69,7 +69,7 @@ function translateNodes(data) {
     if(undefined == temp_nodes[col[0]][col[1]][col[2]][col[3]][col[4]]) {
       temp_nodes[col[0]][col[1]][col[2]][col[3]][col[4]] = [];
     }
-    temp_nodes[col[0]][col[1]][col[2]][col[3]][col[4]].append({
+    temp_nodes[col[0]][col[1]][col[2]][col[3]][col[4]].push({
       'level' : col[5],
       'items' : findSeries(col[6], col[7], col[8], col[9], col[10], col[11], col[12], col[13])
     });
@@ -125,7 +125,7 @@ function findSeries() {
   var sets = [];
   i = 0
   while(undefined != arguments[i] && '' != arguments[i]) {
-    sets.append(findID(arguments[i++]));
+    sets.push(findID(arguments[i++]));
   }
   return(sets);
 }
