@@ -1,5 +1,9 @@
 $('body').on('click', 'ul li a', function(event) {
   var lvl = parseInt($(this).attr('id').substr(3));
+  processTable(lvl);
+});
+
+function processTable(lvl) {
   var list = {};
   var rows = ''
   $.each(logs, function(k,v) {
@@ -69,5 +73,5 @@ $('body').on('click', 'ul li a', function(event) {
       rows += '</tr>';
     });
   });
-  $('#' + tab + ' table tbody').empty().append(rows);
-});
+  $('#lvl' + lvl + ' table tbody').empty().append(rows);
+}
