@@ -62,8 +62,10 @@ function translateCrystals(data) {
 }
 
 function findID(name) {
+  console.log(name);
   var id = false;
   $.each(crystals, function(k,v) {
+    console.log(k,v);
     if(name == v.name) {
       id = k;
       return false;
