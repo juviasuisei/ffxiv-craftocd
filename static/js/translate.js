@@ -20,5 +20,5 @@ function translateItems(data) {
 }
 
 function displayJSON(data) {
-  $('#results').val(JSON.stringify(data));
+  $('#result').val(JSON.stringify(data));
 }
