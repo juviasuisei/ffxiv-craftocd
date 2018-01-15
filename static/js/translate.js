@@ -16,5 +16,9 @@ function translateItems(data) {
       'api' : col[4]
     }
   });
-  console.log(items);
+  displayJSON(items);
+}
+
+function displayJSON(data) {
+  $('#results').val(JSON.stringify(data));
 }
