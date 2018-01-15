@@ -60,7 +60,31 @@ function processTable(lvl) {
       }
     });
   });
+  var fullList = {
+    'CRP' : {},
+    'BSM' : {},
+    'ARM' : {},
+    'GSM' : {},
+    'LTW' : {},
+    'WVR' : {},
+    'ALC' : {},
+    'CUL' : {},
+  };
   $.each(list, function(k,v) {
+    $.each(v, function(k2,v2) {
+      if(undefined == fullList[k][k2]) {
+        var ocd = ('CUL' == k && v2.leve > 0 && v2.quest > 0 ? 0 : 1);
+        var total = ocd + v2.leve + v2.quest;
+        fullList[k][k2] = {
+          'total' = total,
+          'ocd' = ocd,
+          'leve' = v2.leve,
+          'quest' = v2.quest
+        };
+      }
+    });
+  });
+  $.each(fullList, function(k,v) {
     $.each(v, function(k2,v2) {
       rows += '<tr>';
       rows += '<td>' + k + '</td>';
@@ -69,8 +93,8 @@ function processTable(lvl) {
       rows += '<a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/';
       rows += items[k2].api + '/" class="eorzeadb_link">';
       rows += items[k2].name + '</a></td>';
-      var total = 1 + v2.leve + v2.quest;
-      rows += '<td>' + total + '</td>';
+      rows += '<td>' + v2.total + '</td>';
+      rows += '<td>' + v2.ocd + '</td>';
       rows += '<td>' + v2.leve + '</td>';
       rows += '<td>' + v2.quest + '</td>';
       rows += '</tr>';
