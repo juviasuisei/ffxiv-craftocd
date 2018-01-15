@@ -16,6 +16,7 @@ $('body').on('click', 'ul li a', function(event) {
       }
     });
   });
+  console.log(list);
   $.each(leves, function(k,v) {
     $.each(v.items, function(k2,v2) {
       var leveLvl = parseInt(k2);
@@ -34,6 +35,7 @@ $('body').on('click', 'ul li a', function(event) {
       }
     });
   });
+  console.log(list);
   $.each(quests, function(k,v) {
     $.each(v, function(k2,v2) {
       var questLvl = parseInt(k2);
