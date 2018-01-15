@@ -142,10 +142,10 @@ function translateQuests(data) {
     if(undefined == temp_quests[col[0]][col[1]]) {
       temp_quests[col[0]][col[1]] = [];
     }
-    temp_quests[col[0]][col[1]].push = {
+    temp_quests[col[0]][col[1]].push({
       'qty' : col[2],
       'item' : findID(col[3])
-    }
+    });
   });
   displayJSON(temp_quests);
 }
