@@ -4,7 +4,7 @@ $('body').on('click', '#translate', function(event) {
       translateItems($('#data').val());
       break;
     case 'crystals':
-      translateItems($('#data').val());
+      translateCrystals($('#data').val());
       break;
   }
 });
