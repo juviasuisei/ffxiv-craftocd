@@ -52,6 +52,7 @@ $('body').on('click', 'ul li a', function(event) {
       }
     });
   });
+  console.log(list);
   $.each(list, function(k,v) {
     $.each(v, function(k2,v2) {
       rows += '<tr>';
