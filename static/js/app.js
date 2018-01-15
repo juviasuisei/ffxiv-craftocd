@@ -70,7 +70,7 @@ function processTable(lvl) {
       rows += items[k2].api + '/" class="eorzeadb_link">';
       rows += items[k2].name + '</a></td>';
       var total = 1 + v2.leve + v2.quest;
-      rows += '<td>' + total + </td>';
+      rows += '<td>' + total + '</td>';
       rows += '<td>' + v2.leve + '</td>';
       rows += '<td>' + v2.quest + '</td>';
       rows += '</tr>';
