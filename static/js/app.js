@@ -73,15 +73,18 @@ function processTable(lvl) {
   $.each(list, function(k,v) {
     $.each(v, function(k2,v2) {
       if(undefined == fullList[k][k2]) {
-        var ocd = ('CUL' == k && v2.leve > 0 && v2.quest > 0 ? 0 : 1);
-        var total = ocd + v2.leve + v2.quest;
         fullList[k][k2] = {
-          'total' : total,
-          'ocd' : ocd,
-          'leve' : v2.leve,
-          'quest' : v2.quest
+          'total' : 0,
+          'sub' : 0,
+          'ocd' : 0,
+          'leve' : 0,
+          'quest' : 0
         };
       }
+      var ocd = ('CUL' == k && v2.leve > 0 && v2.quest > 0 ? 0 : 1);
+      fullList[k][k2].ocd = ocd;
+      fullList[k][k2].leve = v2.leve;
+      fullList[k][k2].quest = v2.quest;
     });
   });
   $.each(fullList, function(k,v) {
@@ -93,7 +96,8 @@ function processTable(lvl) {
       rows += '<a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/';
       rows += items[k2].api + '/" class="eorzeadb_link">';
       rows += items[k2].name + '</a></td>';
-      rows += '<td>' + v2.total + '</td>';
+      rows += '<td>' + (v2.sub + v2.ocd + v2.leve + v2.quest) + '</td>';
+      rows += '<td>' + v2.sub + '</td>';
       rows += '<td>' + v2.ocd + '</td>';
       rows += '<td>' + v2.leve + '</td>';
       rows += '<td>' + v2.quest + '</td>';
