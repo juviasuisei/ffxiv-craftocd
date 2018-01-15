@@ -6,6 +6,9 @@ $('body').on('click', '#translate', function(event) {
     case 'crystals':
       translateCrystals($('#data').val());
       break;
+    case 'logs':
+      translateLogs($('#data').val());
+      break;
   }
 });
 
@@ -23,6 +26,29 @@ function translateItems(data) {
   displayJSON(temp_items);
 }
 
+function translateLogs(data) {
+  var temp_logs = {
+    'CRP' : {},
+    'BSM' : {},
+    'ARM' : {},
+    'GSM' : {},
+    'LTW' : {},
+    'WVR' : {},
+    'ALC' : {},
+    'CUL' : {}
+  };
+  $.each(data.split('\n'), function(k,r) {
+    var col = r.split('\t');
+    temp_logs[col[1]][findID(col[0])] = {
+      'name' : col[0],
+      'level' : col[2],
+      'qty' : col[3],
+      'crystals' : {splitSeries([col[4], col[5], col[6], col[7])},
+      'ingredients' : {splitSeries([col[8], [col[8], [col[9], [col[10], [col[11], [col[12], [col[13], [col[14], [col[15], [col[16])}
+    }
+  });
+  displayJSON(temp_logs);
+}
 function translateCrystals(data) {
   var temp_crystals = {};
   $.each(data.split('\n'), function(k,r) {
@@ -33,6 +59,37 @@ function translateCrystals(data) {
     }
   });
   displayJSON(temp_crystals);
+}
+
+function findID(name) {
+  var id = false;
+  $.each(crystals, function(k,v) {
+    if(name == v.name) {
+      id = k;
+      break;
+    }
+  });
+  if(false == id) {
+    $.each(items, function(k,v) {
+      if(name == v.name) {
+        id = k;
+        break;
+      }
+    });
+  }
+  if(false == id) {
+    console.log(name);
+  }
+  return(id);
+}
+
+function splitSeries(series) {
+  var sets = {};
+  i = 0
+  while(undefined != series[i]) {
+    sets[findID(series[i + 1])] = series[i];
+    i += 2;
+  }
 }
 
 function displayJSON(data) {
