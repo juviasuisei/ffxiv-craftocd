@@ -1,4 +1,4 @@
-var {
+var crystals = {
   "wis": {
     "name": "Wind Shard",
     "api": "843899bc8f6"
