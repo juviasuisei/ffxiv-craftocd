@@ -86,7 +86,7 @@ function findID(name) {
 function splitSeries() {
   var sets = {};
   i = 0
-  while(undefined != arguments[i]) {
+  while(undefined != arguments[i] && '' != arguments[i]) {
     sets[findID(arguments[i + 1])] = arguments[i];
     i += 2;
   }
