@@ -15,6 +15,9 @@ $('body').on('click', '#translate', function(event) {
     case 'npcs':
       translateNPCs($('#data').val());
       break;
+    case 'leves':
+      translateLeves($('#data').val());
+      break;
   }
 });
 
@@ -80,7 +83,6 @@ function translateNodes(data) {
   displayJSON(temp_nodes);
 }
 
-
 function translateNPCs(data) {
   var temp_npcs = {};
   $.each(data.split('\n'), function(k,r) {
@@ -94,6 +96,33 @@ function translateNPCs(data) {
     }
   });
   displayJSON(temp_npcs);
+}
+
+function translateLeves(data) {
+  var temp_leves = {};
+  $.each(data.split('\n'), function(k,r) {
+    var col = r.split('\t');
+    if(undefined == temp_leves[col[0]]) {
+      temp_leves[col[0]] = {'x' : col[4], 'y' : col[5]};
+    }
+    if(undefined == temp_leves[col[0]][col[1]]) {
+      temp_leves[col[0]][col[1]] = {};
+    }
+    if(undefined == temp_leves[col[0]][col[1]][col[2]]) {
+      temp_leves[col[0]][col[1]][col[2]] = {};
+    }
+    if(undefined == temp_leves[col[0]][col[1]][col[2]][col[3]]) {
+      temp_leves[col[0]][col[1]][col[2]][col[3]] = {};
+    }
+    if(undefined == temp_leves[col[0]][col[1]][col[2]][col[3]][col[6]]) {
+      temp_leves[col[0]][col[1]][col[2]][col[3]][col[6]] = [];
+    }
+    temp_leves[col[0]][col[1]][col[2]][col[3]][col[6]].push({
+      'qty' : col[7],
+      'item' : findID(col[8])
+    });
+  });
+  displayJSON(temp_leves);
 }
 
 function translateCrystals(data) {
