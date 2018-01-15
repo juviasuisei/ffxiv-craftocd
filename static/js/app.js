@@ -21,7 +21,7 @@ $('body').on('click', 'ul li a', function(event) {
       var leveLvl = parseInt(k2);
       if(lvl >= leveLvl && (lvl - 4) <= leveLvl) {
         $.each(v2, function(k3,v3) {
-          if(undefined = list[k3][v3.item]) {
+          if(undefined == list[k3][v3.item]) {
             list[k3][v3.item] = {
               'sub' : 0,
               'check' : 0,
@@ -39,7 +39,7 @@ $('body').on('click', 'ul li a', function(event) {
       var questLvl = parseInt(k2);
       if(lvl >= questLvl && (lvl - 4) <= questLvl) {
         $.each(v2, function(k3,v3) {
-          if(undefined = list[k3][v3.item]) {
+          if(undefined == list[k3][v3.item]) {
             list[k][v3.item] = {
               'sub' : 0,
               'check' : 0,
