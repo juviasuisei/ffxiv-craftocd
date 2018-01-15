@@ -10,5 +10,5 @@ $('body').on('click', 'ul li a', function(event) {
       rows += '</tr>';
     });
   });
-  $('#' + tab +
+  $('#' + tab + ' table tbody').empty().append(rows);
 });
