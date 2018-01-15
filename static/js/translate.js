@@ -12,6 +12,9 @@ $('body').on('click', '#translate', function(event) {
     case 'nodes':
       translateNodes($('#data').val());
       break;
+    case 'npcs':
+      translateNPCs($('#data').val());
+      break;
   }
 });
 
@@ -46,8 +49,8 @@ function translateLogs(data) {
       'name' : col[0],
       'level' : col[2],
       'qty' : col[3],
-      'crystals' : splitSeries(col[4], col[5], col[6], col[7]),
-      'ingredients' : splitSeries(col[8], col[9], col[10], col[11], col[12], col[13], col[14], col[15], col[16], col[17])
+      'crystals' : splitSeries(col[4], col[5], col[6], col[7]), // 2
+      'ingredients' : splitSeries(col[8], col[9], col[10], col[11], col[12], col[13], col[14], col[15], col[16], col[17]) // 5
     }
   });
   displayJSON(temp_logs);
@@ -75,6 +78,22 @@ function translateNodes(data) {
     });
   });
   displayJSON(temp_nodes);
+}
+
+
+function translateNPCs(data) {
+  var temp_npcs = {};
+  $.each(data.split('\n'), function(k,r) {
+    var col = r.split('\t');
+    temp_npcs[col[0]] = {
+      'region' : col[1],
+      'map' : col[2],
+      'x' : col[3],
+      'y' : col[4],
+      'items' : findSeries(col[5], col[6], col[7], col[8], col[9], col[10], col[11], col[12]) // M
+    }
+  });
+  displayJSON(temp_npcs);
 }
 
 function translateCrystals(data) {
