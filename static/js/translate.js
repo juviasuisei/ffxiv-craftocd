@@ -6,6 +6,7 @@ $('body').on('click', '#translate', function(event) {
 });
 
 function translateItems(data) {
+  console.log(data);
   var items = {};
   $.each(data.split('\n'), function(k,r) {
     var col = r.split('\t');
@@ -16,9 +17,11 @@ function translateItems(data) {
       'api' : col[4]
     }
   });
+  console.log(items);
   displayJSON(items);
 }
 
 function displayJSON(data) {
+  console.log(JSON.stringify(data));
   $('#result').val(JSON.stringify(data));
 }
