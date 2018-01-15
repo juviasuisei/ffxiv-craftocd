@@ -6,7 +6,10 @@ $('body').on('click', 'ul li a', function(event) {
       rows += '<tr>';
       rows += '<td>' + k + '</td>';
       rows += '<td>' + v2.level + '</td>';
-      rows += '<td>' + items[k2].name + '</td>';
+      rows += '<td>';
+      rows += '<a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/';
+      rows += v2.api + '/" class="eorzeadb_link">';
+      rows += items[k2].name + '</a></td>';
       rows += '</tr>';
     });
   });
