@@ -66,14 +66,14 @@ function findID(name) {
   $.each(crystals, function(k,v) {
     if(name == v.name) {
       id = k;
-      break;
+      return false;
     }
   });
   if(false == id) {
     $.each(items, function(k,v) {
       if(name == v.name) {
         id = k;
-        break;
+        return false;
       }
     });
   }
