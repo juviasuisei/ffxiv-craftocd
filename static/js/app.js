@@ -69,7 +69,8 @@ function processTable(lvl) {
       rows += '<a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/';
       rows += items[k2].api + '/" class="eorzeadb_link">';
       rows += items[k2].name + '</a></td>';
-      rows += '<td>1</td>';
+      var total = 1 + v2.leve + v2.quest;
+      rows += '<td>' + total + </td>';
       rows += '<td>' + v2.leve + '</td>';
       rows += '<td>' + v2.quest + '</td>';
       rows += '</tr>';
