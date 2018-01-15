@@ -17,13 +17,10 @@ $('body').on('click', 'ul li a', function(event) {
     });
   });
   $.each(leves, function(k,v) {
-    console.log(k);
-    $.each(v, function(k2,v2) {
-      console.log(k2);
+    $.each(v.items, function(k2,v2) {
       var leveLvl = parseInt(k2);
       if(lvl >= leveLvl && (lvl - 4) <= leveLvl) {
         $.each(v2, function(k3,v3) {
-          console.log(k3,v3);
           if(undefined == list[k3][v3.item]) {
             list[k3][v3.item] = {
               'sub' : 0,
@@ -55,11 +52,8 @@ $('body').on('click', 'ul li a', function(event) {
       }
     });
   });
-//  console.log(list);
   $.each(list, function(k,v) {
-//    console.log(k);
     $.each(v, function(k2,v2) {
-//      console.log(k2,v2);
       rows += '<tr>';
       rows += '<td>' + k + '</td>';
       rows += '<td>' + logs[k][k2].level + '</td>';
