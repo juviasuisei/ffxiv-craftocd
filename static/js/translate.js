@@ -29,7 +29,7 @@ function translateCrystals(data) {
     var col = r.split('\t');
     temp_crystals[col[0]] = {
       'name' : col[1],
-      'api' : col[4]
+      'api' : col[2]
     }
   });
   displayJSON(temp_crystals);
