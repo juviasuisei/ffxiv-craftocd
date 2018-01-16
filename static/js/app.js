@@ -129,6 +129,6 @@ function findRecipe(id) {
   return(recipes);
 }
 
-function processRecipe(data, class, recipe, qty) {
+function processRecipe(data, type, recipe, qty) {
   
 }
