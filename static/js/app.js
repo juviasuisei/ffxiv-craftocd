@@ -90,7 +90,7 @@ function processTable(lvl) {
         if(0 < recipes.length) {
           var r = parseInt(v3) % recipes.length;
           $.each(recipes, function(k4,v4) {
-            fullList = processRecipe(fullList, k3, k4, parseInt(v4)/recipes.length + Math.Max(r--, 0));
+            fullList = processRecipe(fullList, k3, k4, parseInt(v4)/recipes.length + Math.max(r--, 0));
           });
         }
       });
