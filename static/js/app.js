@@ -81,10 +81,19 @@ function processTable(lvl) {
           'quest' : 0
         };
       }
-      var ocd = ('CUL' == k && v2.leve > 0 && v2.quest > 0 ? 0 : 1);
+      var ocd = ('CUL' == k && (0 < parseInt(v2.leve) || 0 < parseInt(v2.quest)) ? 0 : 1);
       fullList[k][k2].ocd = ocd;
-      fullList[k][k2].leve = v2.leve;
-      fullList[k][k2].quest = v2.quest;
+      fullList[k][k2].leve = parseInt(v2.leve);
+      fullList[k][k2].quest = parseInt(v2.quest);
+      $.each(logs[k][k2].ingredients, function(k3,v3) {
+        var recipes = findRecipe(k3);
+        if(0 < recipes.length) {
+          var r = parseInt(v3) % recipes.length;
+          $.each(recipes, function(k4,v4) {
+            fullList = processRecipe(fullList, k3, k4, parseInt(v4)/recipes.length + Math.Max(r--, 0));
+          });
+        }
+      });
     });
   });
   $.each(fullList, function(k,v) {
@@ -105,4 +114,21 @@ function processTable(lvl) {
     });
   });
   $('#lvl' + lvl + ' table tbody').empty().append(rows);
+}
+
+function findRecipe(id) {
+  var recipes = [];
+  $.each(logs, function(k,v) {
+    $.each(v, function(k2,v2) {
+      if(id == k2) {
+        recipes.push(k);
+        return false;
+      }
+    });
+  });
+  return(recipes);
+}
+
+function processRecipe(data, class, recipe, qty) {
+  
 }
