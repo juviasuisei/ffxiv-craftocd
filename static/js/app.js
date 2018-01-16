@@ -72,7 +72,6 @@ function processTable(lvl) {
   };
   $.each(list, function(k,v) {
     $.each(v, function(k2,v2) {
-      console.log(fullList);
       if(undefined == fullList[k][k2]) {
         fullList[k][k2] = {
           'total' : 0,
