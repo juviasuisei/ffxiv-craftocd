@@ -55,8 +55,9 @@ function translateLogs(data) {
       'name' : col[0],
       'level' : col[2],
       'qty' : col[3],
-      'crystals' : splitSeries(col[4], col[5], col[6], col[7]), // 2
-      'ingredients' : splitSeries(col[8], col[9], col[10], col[11], col[12], col[13], col[14], col[15], col[16], col[17]) // 5
+      'req' : col[4],
+      'crystals' : splitSeries(col[5], col[6], col[7], col[8]), // 2
+      'ingredients' : splitSeries(col[9], col[10], col[11], col[12], col[13], col[14], col[15], col[16], col[17], col[18]) // 5
     }
   });
   displayJSON(temp_logs);
