@@ -51,7 +51,6 @@ function translateLogs(data) {
   };
   $.each(data.split('\n'), function(k,r) {
     var col = r.split('\t');
-    console.log(col);
     temp_logs[col[1]][findID(col[0])] = {
       'name' : col[0],
       'level' : col[2],
@@ -166,7 +165,6 @@ function translateCrystals(data) {
 }
 
 function findID(name) {
-  console.log(name);
   var id = false;
   $.each(crystals, function(k,v) {
     if(name == v.name) {
@@ -191,7 +189,6 @@ function findID(name) {
 function splitSeries() {
   var sets = {};
   i = 0
-  console.log(arguments[0],arguments[1]);
   while(undefined != arguments[i] && '' != arguments[i]) {
     sets[findID(arguments[i + 1])] = arguments[i];
     i += 2;
