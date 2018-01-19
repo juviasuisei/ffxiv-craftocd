@@ -161,6 +161,9 @@ function processTable(lvl) {
     if(aLvl != bLvl) {
       return(aLvl - bLvl);
     }
+    if(a.sub != b.sub) {
+      return(bQty - aQty);
+    }
     var aQty = a.ocd + a.leve + a.quest + a.sub;
     var bQty = b.ocd + b.leve + b.quest + b.sub;
     if(aQty != bQty) {
