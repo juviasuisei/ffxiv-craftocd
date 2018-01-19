@@ -187,6 +187,7 @@ function findID(name) {
 }
 
 function splitSeries() {
+  console.log(arguments);
   var sets = {};
   i = 0
   while(undefined != arguments[i] && '' != arguments[i]) {
