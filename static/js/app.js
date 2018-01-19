@@ -218,10 +218,10 @@ function processRecipe(data, type, log, qty, add) {
     var subQty = parseInt(v) * qty;
     var recipes = findRecipe(k);
     if(0 < recipes.length) {
-			while(subQty > 0) {
-				$.each(recipes, function(k2,v2) {
-					if(undefined == data[v2+k]) {
-						data[v2+k] = {
+      while(subQty > 0) {
+        $.each(recipes, function(k2,v2) {
+          if(undefined == data[v2+k]) {
+            data[v2+k] = {
               'hand' : v2,
               'id' : k,
 							'sub' : 0,
