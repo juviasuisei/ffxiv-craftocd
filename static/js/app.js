@@ -42,6 +42,7 @@ function processTable(lvl) {
     $.each(v, function(k2,v2) {
       var recipeLvl = parseInt(v2.level);
       if(lvl >= recipeLvl && (lvl - 4) <= recipeLvl) {
+	      console.log(k,k2);
         tempLogList[k][k2] = {
           'sub' : 0,
           'ocd' : ("1" == items[k2].ring ? 2 : 1),
