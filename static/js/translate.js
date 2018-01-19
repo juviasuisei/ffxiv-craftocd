@@ -165,6 +165,7 @@ function translateCrystals(data) {
 }
 
 function findID(name) {
+  console.log(name);
   var id = false;
   $.each(crystals, function(k,v) {
     if(name == v.name) {
@@ -187,9 +188,9 @@ function findID(name) {
 }
 
 function splitSeries() {
-  console.log(arguments);
   var sets = {};
   i = 0
+  console.log(arguments[0],arguments[1]);
   while(undefined != arguments[i] && '' != arguments[i]) {
     sets[findID(arguments[i + 1])] = arguments[i];
     i += 2;
