@@ -51,6 +51,7 @@ function translateLogs(data) {
   };
   $.each(data.split('\n'), function(k,r) {
     var col = r.split('\t');
+    console.log(col);
     temp_logs[col[1]][findID(col[0])] = {
       'name' : col[0],
       'level' : col[2],
