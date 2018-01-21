@@ -1,4 +1,4 @@
-$('body').on('click', '.btn-group input', function(e) {
+$('body').on('click', '.btn-group .btn', function(e) {
   $('#data').val('');
 });
 
