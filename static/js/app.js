@@ -54,7 +54,7 @@ function processTable(lvl) {
   $.each(leves, function(k,v) {
     $.each(v.items, function(k2,v2) {
       var leveLvl = parseInt(k2);
-      if(lvl >= leveLvl && (lvl - 4) <= leveLvl) {
+      if(lvl > leveLvl && (lvl - 5) <= leveLvl) {
         $.each(v2, function(k3,v3) {
           $.each(v3, function(k4,v4) {
             if(undefined == tempLogList[k3][v4.item]) {
