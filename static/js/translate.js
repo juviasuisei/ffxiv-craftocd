@@ -1,4 +1,8 @@
-$('body').on('click', '#translate', function(event) {
+$('body').on('click', '.btn-group input'), function(e) {
+  $('#data').val('');
+});
+
+$('body').on('click', '#translate', function(e) {
   switch($('.active input').attr('id')) {
     case 'items':
       translateItems($('#data').val());
