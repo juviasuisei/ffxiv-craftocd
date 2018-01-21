@@ -26,6 +26,7 @@ $('.tab-pane').each(function(k,v) {
 	tables += '<tbody></tbody>';
 	tables += '</table>';
 	$(this).append(tables);
+	$('table').stickyTableHeaders();
 });
 processTable(5);
 
