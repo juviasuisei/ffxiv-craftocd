@@ -244,7 +244,7 @@ function processRecipe(data, type, log, qty, add) {
 					}
 				});
 			}
-    } else {
+		} else {
 			if(undefined == landList[k]) {
 				landList[k] = 0;
 			}
