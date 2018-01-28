@@ -61,7 +61,7 @@ function translateLogs(data) {
       'qty' : col[3],
       'req' : col[4],
       'crystals' : splitSeries(col[5], col[6], col[7], col[8]), // 2
-      'ingredients' : splitSeries(col[9], col[10], col[11], col[12], col[13], col[14], col[15], col[16], col[17], col[18]) // 5
+      'ingredients' : splitSeries(col[9], col[10], col[11], col[12], col[13], col[14], col[15], col[16], col[17], col[18], col[19], col[20]) // 6
     }
   });
   displayJSON(temp_logs);
