@@ -100,7 +100,7 @@ function translateNPCs(data) {
       'map' : col[2],
       'x' : col[3],
       'y' : col[4],
-      'items' : findSeries(col[5], col[6], col[7], col[8], col[9], col[10], col[11], col[12]) // M
+      'items' : findSeries(col[5], col[6], col[7], col[8], col[9], col[10], col[11], col[12], col[13]) // N
     }
   });
   displayJSON(temp_npcs);
