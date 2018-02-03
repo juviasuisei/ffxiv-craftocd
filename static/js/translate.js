@@ -36,7 +36,8 @@ function translateItems(data) {
       'name' : col[1],
       'ring' : col[2],
       'fish' : col[3],
-      'api' : col[4]
+      'other' : col[4]
+      'api' : col[5]
     }
   });
   displayJSON(temp_items);
