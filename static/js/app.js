@@ -292,6 +292,8 @@ function findLocations(id) {
 	var locations = [];
 	if(undefined != items[id] && "1" == items[id].fish) {
 		locations.push('FSH');
+	} else if(undefined != items[id] && "1" == items[id].other) {
+		locations.push('N/A');
 	} else {
 		var litmus = false;
 		$.each(nodes, function(k,v) {
