@@ -86,7 +86,7 @@ function translateNodes(data) {
     }
     temp_nodes[col[0]][col[1]][col[2]][col[3]][col[4]].push({
       'level' : col[5],
-      'items' : findSeries(col[6], col[7], col[8], col[9], col[10], col[11], col[12], col[13])
+      'items' : findSeries(col[6], col[7], col[8], col[9], col[10], col[11], col[12], col[13], col[14]) // O
     });
   });
   displayJSON(temp_nodes);
