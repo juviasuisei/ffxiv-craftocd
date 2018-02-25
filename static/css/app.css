@@ -9,3 +9,7 @@
     margin-bottom: 0 !important;
   }
 }
+
+thead { background: white; }
+.nav-tabs > li > a { margin-right: 0; }
+.nav > li > a { padding: 10px; }
