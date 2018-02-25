@@ -41,7 +41,6 @@ function processTable(lvl) {
   $.each(logs, function(k,v) {
     tempLogList[k] = {};
     $.each(v, function(k2,v2) {
-console.log(k,v,k2,v2);
       var recipeLvl = parseInt(v2.level);
       if(lvl >= recipeLvl && (lvl - 4) <= recipeLvl) {
         tempLogList[k][k2] = {
@@ -188,7 +187,6 @@ console.log(k,v,k2,v2);
   });
   rows = ''
   $.each(handArray, function(k,v) {
-console.log(k,v);
     rows += '<tr>';
     rows += '<td>' + v.hand + '</td>';
     rows += '<td>' + logs[v.hand][v.id].level + '</td>';
