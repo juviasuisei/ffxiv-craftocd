@@ -56,7 +56,7 @@ function translateLogs(data) {
   };
   $.each(data.split('\n'), function(k,r) {
     var col = r.split('\t');
-    temp_logs[col[0]][findID(col[0])] = {
+    temp_logs[col[0]][findID(col[2])] = {
       'name' : col[2],
       'level' : col[1],
       'qty' : col[3],
