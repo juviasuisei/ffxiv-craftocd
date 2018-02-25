@@ -56,9 +56,9 @@ function translateLogs(data) {
   };
   $.each(data.split('\n'), function(k,r) {
     var col = r.split('\t');
-    temp_logs[col[1]][findID(col[0])] = {
-      'name' : col[0],
-      'level' : col[2],
+    temp_logs[col[0]][findID(col[0])] = {
+      'name' : col[2],
+      'level' : col[1],
       'qty' : col[3],
       'req' : col[4],
       'crystals' : splitSeries(col[5], col[6], col[7], col[8]), // 2
@@ -111,21 +111,21 @@ function translateLeves(data) {
   var temp_leves = {};
   $.each(data.split('\n'), function(k,r) {
     var col = r.split('\t');
-    if(undefined == temp_leves[col[0]]) {
-      temp_leves[col[0]] = {
+    if(undefined == temp_leves[col[2]]) {
+      temp_leves[col[2]] = {
         'items' : {},
-        'region' : col[1],
-        'map' : col[2],
-        'x' : col[3],
-        'y' : col[4]};
+        'region' : col[3],
+        'map' : col[4],
+        'x' : col[5],
+        'y' : col[6]};
     }
-    if(undefined == temp_leves[col[0]].items[col[5]]) {
-      temp_leves[col[0]].items[col[5]] = {};
+    if(undefined == temp_leves[col[2]].items[col[0]]) {
+      temp_leves[col[2]].items[col[0]] = {};
     }
-    if(undefined == temp_leves[col[0]].items[col[5]][col[6]]) {
-      temp_leves[col[0]].items[col[5]][col[6]] = [];
+    if(undefined == temp_leves[col[2]].items[col[0]][col[1]]) {
+      temp_leves[col[2]].items[col[0]][col[1]] = [];
     }
-    temp_leves[col[0]].items[col[5]][col[6]].push({
+    temp_leves[col[2]].items[col[0]][col[1]].push({
       'qty' : col[7],
       'item' : findID(col[8])
     });
