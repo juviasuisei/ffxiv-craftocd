@@ -119,13 +119,13 @@ function translateLeves(data) {
         'x' : col[5],
         'y' : col[6]};
     }
-    if(undefined == temp_leves[col[2]].items[col[0]]) {
-      temp_leves[col[2]].items[col[0]] = {};
+    if(undefined == temp_leves[col[2]].items[col[1]]) {
+      temp_leves[col[2]].items[col[1]] = {};
     }
-    if(undefined == temp_leves[col[2]].items[col[0]][col[1]]) {
-      temp_leves[col[2]].items[col[0]][col[1]] = [];
+    if(undefined == temp_leves[col[2]].items[col[1]][col[0]]) {
+      temp_leves[col[2]].items[col[1]][col[0]] = [];
     }
-    temp_leves[col[2]].items[col[0]][col[1]].push({
+    temp_leves[col[2]].items[col[1]][col[0]].push({
       'qty' : col[7],
       'item' : findID(col[8])
     });
