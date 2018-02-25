@@ -1,7 +1,7 @@
 $('.tab-pane').each(function(k,v) {
 	var tables = '';
 	tables += '<table class="table table-striped table-condensed land">';
-	tables += '<thead class="bg-white">';
+	tables += '<thead>';
 	tables += '<tr>';
 	tables += '<th>Name</th>';
 	tables += '<th>Qty</th>';
@@ -11,7 +11,7 @@ $('.tab-pane').each(function(k,v) {
 	tables += '<tbody></tbody>';
 	tables += '</table>';
 	tables += '<table class="table table-striped table-condensed hand">';
-	tables += '<thead class="bg-white">';
+	tables += '<thead>';
 	tables += '<tr>';
 	tables += '<th>Class</th>';
 	tables += '<th>Level</th>';
