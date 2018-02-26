@@ -30,7 +30,6 @@ $('.tab-pane').each(function(k, v) {
 });
 processTable(5);
 
-
 $('body').on('click', 'ul li a', function(event) {
     var lvl = parseInt($(this).attr('id').substr(3));
     processTable(lvl);
@@ -218,49 +217,33 @@ function findRecipe(id) {
 }
 
 function processRecipe(data, type, log, qty, add) {
-    var z = 0;
-    console.log('process',data, type, log, qty, add);
     $.each(logs[type][log].ingredients, function(k, v) {
-console.log('ing',k,v);
         var subQty = parseInt(v) * qty;
         var recipes = findRecipe(k);
-        var rlength = recipes.length;
-console.log('result',rlength,recipes);
-        if (0 < rlength) {
-console.log('loop',subQty, z);
-            while (subQty-- > 0) {
-console.log('subloop',subQty, z,recipes);
-                if(rlength > 1) {
-                    if(rlength >= z) {
-                        var r = recipes[z]
-                        z++;
-                    } else {
-                        z = 0;
-                        var r = recipes[z];
+        if (0 < recipes.length) {
+            while (subQty > 0) {
+                $.each(recipes, function(k2, v2) {
+                    if (undefined == data[v2 + k]) {
+                        data[v2 + k] = {
+                            'hand': v2,
+                            'id': k,
+                            'sub': 0,
+                            'ocd': 0,
+                            'leve': 0,
+                            'quest': 0
+                        }
                     }
-                } else {
-                        var r = recipes[0];
-                }
-                if (undefined == data[r + k]) {
-                    data[r + k] = {
-                        'hand': r,
-                        'id': k,
-                        'sub': 0,
-                        'ocd': 0,
-                        'leve': 0,
-                        'quest': 0
+                    if (subQty-- > 0) {
+                        if (add) {
+                            data[v2 + k].sub += 1;
+                        } else {
+                            data[v2 + k].sub -= 1;
+                        }
+                        data = processRecipe(data, v2, k, 1, add);
                     }
-                }
-                if (add) {
-                    data[r + k].sub += 1;
-                } else {
-                    data[r + k].sub -= 1;
-                }
-console.log('incept');
-                data = processRecipe(data, r, k, 1, add);
+                });
             }
         } else {
-console.log('gather_instead');
             if (undefined == landList[k]) {
                 landList[k] = 0;
             }
