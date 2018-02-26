@@ -229,9 +229,11 @@ console.log('result',rlength,recipes);
         if (0 < rlength) {
 console.log('loop',subQty, z);
             while (subQty-- > 0) {
+console.log('loop',subQty, z,recipes);
                 if(rlength > 1) {
                     if(rlength >= z) {
-                        var r = recipes[z++]
+                        var r = recipes[z]
+                        z++;
                     } else {
                         z = 0;
                         var r = recipes[z];
