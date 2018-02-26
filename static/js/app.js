@@ -217,9 +217,7 @@ function findRecipe(id) {
     return (recipes);
 }
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-}
+var z = 0;
 
 function processRecipe(data, type, log, qty, add) {
     $.each(logs[type][log].ingredients, function(k, v) {
@@ -228,7 +226,16 @@ function processRecipe(data, type, log, qty, add) {
         var rlength = recipes.length;
         if (0 < rlength) {
             while (subQty-- > 0) {
-                var r = recipes[rlength > 1 ? getRandomInt(rlength) : 0];
+                if(rlength > 1) {
+                    if(rlength >= z) {
+                        var r = recipes[z++]
+                    } else {
+                        z = 0;
+                        var r = recipes[z];
+                    }
+                } else {
+                        var r = recipes[0];
+                }
                 if (undefined == data[r + k]) {
                     data[r + k] = {
                         'hand': r,
