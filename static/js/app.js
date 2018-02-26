@@ -217,40 +217,31 @@ function findRecipe(id) {
 }
 
 function processRecipe(data, type, log, qty, add) {
-    var z = 0;
     $.each(logs[type][log].ingredients, function(k, v) {
         var subQty = parseInt(v) * qty;
         var recipes = findRecipe(k);
-        var rlen = recipes.length;
-        if (0 < rlen) {
+        if (0 < recipes.length) {
             while (subQty > 0) {
-                var r = recipes[0];
-                if(rlen > 1) {
-                    if(rlen >= z) {
-                        r = recipes[z++];
-                    } else {
-                        z = 0;
-                        r = recipes[z];
+                $.each(recipes, function(k2, v2) {
+                    if (undefined == data[v2 + k]) {
+                        data[v2 + k] = {
+                            'hand': v2,
+                            'id': k,
+                            'sub': 0,
+                            'ocd': 0,
+                            'leve': 0,
+                            'quest': 0
+                        }
                     }
-                }
-                if (undefined == data[r + k]) {
-                    data[r + k] = {
-                        'hand': r,
-                        'id': k,
-                        'sub': 0,
-                        'ocd': 0,
-                        'leve': 0,
-                        'quest': 0
+                    if (subQty-- > 0) {
+                        if (add) {
+                            data[v2 + k].sub += 1;
+                        } else {
+                            data[v2 + k].sub -= 1;
+                        }
+                        data = processRecipe(data, v2, k, 1, add);
                     }
-                }
-                if (subQty-- > 0) {
-                    if (add) {
-                        data[r + k].sub += 1;
-                    } else {
-                        data[r + k].sub -= 1;
-                    }
-                    data = processRecipe(data, r, k, 1, add);
-                }
+                });
             }
         } else {
             if (undefined == landList[k]) {
