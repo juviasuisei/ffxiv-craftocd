@@ -229,7 +229,7 @@ console.log('result',rlength,recipes);
         if (0 < rlength) {
 console.log('loop',subQty, z);
             while (subQty-- > 0) {
-console.log('loop',subQty, z,recipes);
+console.log('subloop',subQty, z,recipes);
                 if(rlength > 1) {
                     if(rlength >= z) {
                         var r = recipes[z]
@@ -256,7 +256,7 @@ console.log('loop',subQty, z,recipes);
                 } else {
                     data[r + k].sub -= 1;
                 }
-console.log('subloop');
+console.log('incept');
                 data = processRecipe(data, r, k, 1, add);
             }
         } else {
