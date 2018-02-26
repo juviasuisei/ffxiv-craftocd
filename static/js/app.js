@@ -220,14 +220,14 @@ function findRecipe(id) {
 var z = 0;
 
 function processRecipe(data, type, log, qty, add) {
-    console.log(data, type, log, qty, add);
+console.log('process',data, type, log, qty, add);
     $.each(logs[type][log].ingredients, function(k, v) {
         var subQty = parseInt(v) * qty;
         var recipes = findRecipe(k);
         var rlength = recipes.length;
-console.log(rlength,recipes);
+console.log('result',rlength,recipes);
         if (0 < rlength) {
-console.log(subQty, z);
+console.log('loop',subQty, z);
             while (subQty-- > 0) {
                 if(rlength > 1) {
                     if(rlength >= z) {
@@ -254,6 +254,7 @@ console.log(subQty, z);
                 } else {
                     data[r + k].sub -= 1;
                 }
+console.log('subloop');
                 data = processRecipe(data, r, k, 1, add);
             }
         } else {
