@@ -220,7 +220,8 @@ function processRecipe(data, type, log, qty, add) {
     $.each(logs[type][log].ingredients, function(k, v) {
         var subQty = parseInt(v) * qty;
         var recipes = findRecipe(k);
-        if (0 < recipes.length) {
+        var rlen = recipes.length;
+        if (0 < rlen) {
             while (subQty > 0) {
                 $.each(recipes, function(k2, v2) {
                     if (undefined == data[v2 + k]) {
@@ -233,6 +234,32 @@ function processRecipe(data, type, log, qty, add) {
                             'quest': 0
                         }
                     }
+
+                    if(rlen > 1) {
+                      var gut = data[v2 + k].sub;
+                      var litmus = true;
+                      $.each(recipes, function(k3,v3) {
+                        if(v3 == v2) {
+                          return true;
+                        } else if(undefined == data[v3 + k]) {
+                          data[v3 + k] = {
+                              'hand': v3,
+                              'id': k,
+                              'sub': 0,
+                              'ocd': 0,
+                              'leve': 0,
+                              'quest': 0
+                          }
+                          litmus = false;
+                        } else if((data[v2 + k].sub - data[v3 + k].sub) > 1) {
+                          litmus = false;
+                        }
+                      });
+                      if(false == litmus) {
+                        return true;
+                      }
+                    }
+
                     if (subQty-- > 0) {
                         if (add) {
                             data[v2 + k].sub += 1;
