@@ -218,7 +218,6 @@ function findRecipe(id) {
 }
 
 function processRecipe(data, type, log, qty, add) {
-    console.log(data,type,log,qty,add);
     $.each(logs[type][log].ingredients, function(k, v) {
         var subQty = parseInt(v) * qty;
         var recipes = findRecipe(k);
