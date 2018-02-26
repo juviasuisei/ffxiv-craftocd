@@ -258,6 +258,7 @@ console.log('subloop');
                 data = processRecipe(data, r, k, 1, add);
             }
         } else {
+console.log('gather_instead');
             if (undefined == landList[k]) {
                 landList[k] = 0;
             }
