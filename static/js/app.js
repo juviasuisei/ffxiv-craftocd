@@ -217,32 +217,34 @@ function findRecipe(id) {
     return (recipes);
 }
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
 function processRecipe(data, type, log, qty, add) {
     $.each(logs[type][log].ingredients, function(k, v) {
         var subQty = parseInt(v) * qty;
         var recipes = findRecipe(k);
-        if (0 < recipes.length) {
-            while (subQty > 0) {
-                $.each(recipes, function(k2, v2) {
-                    if (undefined == data[v2 + k]) {
-                        data[v2 + k] = {
-                            'hand': v2,
-                            'id': k,
-                            'sub': 0,
-                            'ocd': 0,
-                            'leve': 0,
-                            'quest': 0
-                        }
+        var rlength = recipes.length;
+        if (0 < rlength) {
+            while (subQty-- > 0) {
+                var r = recipes[rlength > 1 ? getRandomInt(rlength) : 0];
+                if (undefined == data[r + k]) {
+                    data[r + k] = {
+                        'hand': r,
+                        'id': k,
+                        'sub': 0,
+                        'ocd': 0,
+                        'leve': 0,
+                        'quest': 0
                     }
-                    if (subQty-- > 0) {
-                        if (add) {
-                            data[v2 + k].sub += 1;
-                        } else {
-                            data[v2 + k].sub -= 1;
-                        }
-                        data = processRecipe(data, v2, k, 1, add);
-                    }
-                });
+                }
+                if (add) {
+                    data[r + k].sub += 1;
+                } else {
+                    data[r + k].sub -= 1;
+                }
+                data = processRecipe(data, r, k, 1, add);
             }
         } else {
             if (undefined == landList[k]) {
