@@ -36,7 +36,6 @@ $('body').on('click', 'ul li a', function(event) {
 });
 
 function processTable(lvl) {
-    var tempLogList = {};
     if(null == lvl.match(/[ABCD]/)) {
         processFive(lvl);
     } else {
@@ -70,6 +69,7 @@ function standardQuest(data, k, v2) {
 }
 
 function processStar(lvl) {
+    var tempLogList = {};
     var lvlParts = lvl.match(/(\d+)([ABCD])/);
     var lvlDec = 0;
     switch(lvlParts[2]) {
@@ -219,6 +219,7 @@ function processStar(lvl) {
 }
 
 function processFive(lvl) {
+    var tempLogList = {};
     lvl = parseInt(lvl);
     $.each(logs, function(k, v) {
         tempLogList[k] = {};
