@@ -130,7 +130,7 @@ function processTable(lvl) {
         rows += '<tr>';
         rows += '<td>';
         rows += '<a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/';
-        rows += item.api + '/" class="eorzeadb_link">';
+        rows += k + '/" class="eorzeadb_link">';
         rows += item.name + '</a></td>';
         rows += '<td>' + v[1] + '</td>';
         rows += '<td><ul>';
@@ -191,7 +191,7 @@ function processTable(lvl) {
         rows += '<td>' + logs[v.hand][v.id].level + '</td>';
         rows += '<td>';
         rows += '<a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/';
-        rows += items[v.id].api + '/" class="eorzeadb_link">';
+        rows += k + '/" class="eorzeadb_link">';
         rows += items[v.id].name + '</a></td>';
         rows += '<td>' + (v.sub + v.ocd + v.leve + v.quest) + '</td>';
         rows += '<td>' + v.sub + '</td>';
