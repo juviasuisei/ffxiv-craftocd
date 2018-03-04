@@ -28,7 +28,7 @@ $('.tab-pane').each(function(k, v) {
     $(this).append(tables);
     $('table').stickyTableHeaders();
 });
-processTable(5);
+processTable("5");
 
 $('body').on('click', 'ul li a', function(event) {
     var lvl = $(this).attr('id').substr(3);
