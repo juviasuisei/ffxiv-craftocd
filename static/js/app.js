@@ -274,6 +274,7 @@ function processFive(lvl) {
             }
             var leve = parseInt(v2.leve);
             var quest = parseInt(v2.quest);
+console.log(k,v,k2,v2);
             var ocd = (0 == logs[k][k2].req && (0 < leve || 0 < quest) ? 0 : v2.ocd);
             handList[k + k2].ocd = ocd;
             handList[k + k2].leve = leve;
