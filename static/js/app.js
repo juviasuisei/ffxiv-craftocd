@@ -204,6 +204,7 @@ function processTable(lvl) {
 }
 
 function findRecipe(id) {
+console.log(id);
     var recipes = [];
     $.each(logs, function(k, v) {
         $.each(v, function(k2, v2) {
