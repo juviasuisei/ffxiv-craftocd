@@ -145,7 +145,7 @@ function processStar(lvl) {
         rows += '<tr>';
         rows += '<td>';
         rows += '<a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/';
-        rows += k + '/" class="eorzeadb_link">';
+        rows += v[0] + '/" class="eorzeadb_link">';
         rows += item.name + '</a></td>';
         rows += '<td>' + v[1] + '</td>';
         rows += '<td><ul>';
@@ -206,7 +206,7 @@ function processStar(lvl) {
         rows += '<td>' + logs[v.hand][v.id].level + '</td>';
         rows += '<td>';
         rows += '<a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/';
-        rows += k + '/" class="eorzeadb_link">';
+        rows += v.id + '/" class="eorzeadb_link">';
         rows += items[v.id].name + '</a></td>';
         rows += '<td>' + (v.sub + v.ocd + v.leve + v.quest) + '</td>';
         rows += '<td>' + v.sub + '</td>';
@@ -299,7 +299,7 @@ function processFive(lvl) {
         rows += '<tr>';
         rows += '<td>';
         rows += '<a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/';
-        rows += k + '/" class="eorzeadb_link">';
+        rows += v[0] + '/" class="eorzeadb_link">';
         rows += item.name + '</a></td>';
         rows += '<td>' + v[1] + '</td>';
         rows += '<td><ul>';
@@ -360,7 +360,7 @@ function processFive(lvl) {
         rows += '<td>' + logs[v.hand][v.id].level + '</td>';
         rows += '<td>';
         rows += '<a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/';
-        rows += k + '/" class="eorzeadb_link">';
+        rows += v.id + '/" class="eorzeadb_link">';
         rows += items[v.id].name + '</a></td>';
         rows += '<td>' + (v.sub + v.ocd + v.leve + v.quest) + '</td>';
         rows += '<td>' + v.sub + '</td>';
