@@ -31,23 +31,202 @@ $('.tab-pane').each(function(k, v) {
 processTable(5);
 
 $('body').on('click', 'ul li a', function(event) {
-    var lvl = parseInt($(this).attr('id').substr(3));
+    var lvl = $(this).attr('id').substr(3);
     processTable(lvl);
 });
 
 function processTable(lvl) {
     var tempLogList = {};
+    if(null == lvl.match(/[ABCD]/)) {
+        processFive(lvl);
+    } else {
+        processStar(lvl);
+    }
+}
+
+function standardLog(k, k2) {
+    var blankLog = {
+        'sub': 0,
+        'ocd': ("1" == items[k2].ring && logs[k][k2].req ? 2 : 1),
+        'leve': 0,
+        'quest': 0,
+    };
+    return(blankLog);
+}
+
+function standardQuest(data, k, v2) {
+    $.each(v2, function(k3, v3) {
+        if (undefined == data[k][v3.item]) {
+            data[k][v3.item] = {
+                'sub': 0,
+                'ocd': 0,
+                'leve': 0,
+                'quest': 0
+            };
+        }
+        data[k][v3.item].quest += parseInt(v3.qty);
+    });
+    return(data);
+}
+
+function processStar(lvl) {
+    var lvlParts = lvl.match(/(\d+)([ABCD])/);
+    var lvlDec = 0;
+    switch(lvlParts[2]) {
+        case 'A':
+            lvlDec = .1;
+            break;
+        case 'B':
+            lvlDec = .2;
+            break;
+        case 'C':
+            lvlDec = .3;
+            break;
+        case 'D':
+            lvlDec = .4;
+            break;
+    }
+    lvl = parseInt(lvlParts[1]) + lvlDec;
     $.each(logs, function(k, v) {
         tempLogList[k] = {};
         $.each(v, function(k2, v2) {
+            var recipeLvl = parseFloat(v2.level);
+            if (lvl == recipeLvl) {
+                tempLogList[k][k2] = standardLog(k, k2);
+            }
+        });
+    });
+    $.each(quests, function(k, v) {
+        $.each(v, function(k2, v2) {
+            var questLvl = parseFloat(k2);
+            if (lvl == questLvl) {
+                tempLogList = standardQuest(tempLogList, k, v2);
+            }
+        });
+    });
+    var handList = {};
+    landList = {};
+    $.each(tempLogList, function(k, v) {
+        $.each(v, function(k2, v2) {
+            if (undefined == handList[k + k2]) {
+                handList[k + k2] = {
+                    'hand': k,
+                    'id': k2,
+                    'sub': 0,
+                    'ocd': 0,
+                    'leve': 0,
+                    'quest': 0
+                };
+            }
+            var leve = parseInt(v2.leve);
+            var quest = parseInt(v2.quest);
+            var ocd = (0 == logs[k][k2].req && (0 < leve || 0 < quest) ? 0 : v2.ocd);
+            handList[k + k2].ocd = ocd;
+            handList[k + k2].leve = leve;
+            handList[k + k2].quest = quest;
+            handList = processRecipe(handList, k, k2, Math.ceil((ocd + leve + quest) / logs[k][k2].qty), true);
+        });
+    });
+    $.each(handList, function(k, v) {
+        if (0 != v.ocd && 0 == logs[v.hand][v.id].req && (0 < v.sub || 0 < v.leve || 0 < v.quest)) {
+            handList[k].ocd = 0;
+            handList = processRecipe(handList, v.hand, v.id, 1, false);
+        }
+    });
+    var landArray = Object.keys(landList).map(function(k) {
+        return [k, landList[k]];
+    });
+    landArray.sort(function(a, b) {
+        return b[1] - a[1];
+    });
+    var rows = ''
+    $.each(landArray, function(k, v) {
+        var item = findItem(v[0]);
+        rows += '<tr>';
+        rows += '<td>';
+        rows += '<a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/';
+        rows += k + '/" class="eorzeadb_link">';
+        rows += item.name + '</a></td>';
+        rows += '<td>' + v[1] + '</td>';
+        rows += '<td><ul>';
+        var locations = findLocations(v[0]);
+        $.each(locations, function(k2, v2) {
+            rows += '<li>' + v2 + '</li>';
+        });
+        rows += '</ul></td>';
+        rows += '</tr>';
+    });
+    $('#lvl' + lvl + ' .land tbody').empty().append(rows);
+    var handArray = [];
+    $.each(handList, function(k, v) {
+        handArray.push(v);
+    });
+    handArray.sort(function(a, b) {
+        var aLvl = logs[a.hand][a.id].level;
+        var bLvl = logs[b.hand][b.id].level;
+        if (aLvl > lvl && bLvl <= lvl) {
+            return (-1);
+        }
+        if (bLvl > lvl && aLvl <= lvl) {
+            return (1);
+        }
+        if (aLvl > lvl && bLvl > lvl) {
+            return (bLvl - aLvl);
+        }
+        if (aLvl != bLvl) {
+            return (aLvl - bLvl);
+        }
+        if (a.sub != b.sub) {
+            return (bQty - aQty);
+        }
+        var aQty = a.ocd + a.leve + a.quest + a.sub;
+        var bQty = b.ocd + b.leve + b.quest + b.sub;
+        if (aQty != bQty) {
+            return (bQty - aQty);
+        }
+        if (a.sub != b.sub) {
+            return (b.sub - a.sub);
+        }
+        var aHand = translateHand(a.hand);
+        var bHand = translateHand(b.hand);
+        if (aHand != bHand) {
+            return (aHand - bHand);
+        }
+        var aName = items[a.id].name;
+        var bName = items[b.id].name;
+        if (aName == bName) {
+            return (0);
+        }
+        return (aName > bName ? 1 : -1);
+    });
+    rows = ''
+    $.each(handArray, function(k, v) {
+        rows += '<tr>';
+        rows += '<td>' + v.hand + '</td>';
+        rows += '<td>' + logs[v.hand][v.id].level + '</td>';
+        rows += '<td>';
+        rows += '<a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/';
+        rows += k + '/" class="eorzeadb_link">';
+        rows += items[v.id].name + '</a></td>';
+        rows += '<td>' + (v.sub + v.ocd + v.leve + v.quest) + '</td>';
+        rows += '<td>' + v.sub + '</td>';
+        rows += '<td>' + v.ocd + '</td>';
+        rows += '<td>' + v.leve + '</td>';
+        rows += '<td>' + v.quest + '</td>';
+        rows += '</tr>';
+    });
+    $('#lvl' + lvl + ' .hand tbody').empty().append(rows);
+}
+
+function processFive(lvl) {
+    lvl = parseInt(lvl);
+    $.each(logs, function(k, v) {
+        tempLogList[k] = {};
+        $.each(v, function(k2, v2) {
+            if(
             var recipeLvl = parseInt(v2.level);
             if (lvl >= recipeLvl && (lvl - 4) <= recipeLvl) {
-                tempLogList[k][k2] = {
-                    'sub': 0,
-                    'ocd': ("1" == items[k2].ring && logs[k][k2].req ? 2 : 1),
-                    'leve': 0,
-                    'quest': 0,
-                };
+                tempLogList[k][k2] = standardLog(k, k2);
             }
         });
     });
@@ -75,17 +254,7 @@ function processTable(lvl) {
         $.each(v, function(k2, v2) {
             var questLvl = parseInt(k2);
             if (lvl >= questLvl && (lvl - 4) <= questLvl) {
-                $.each(v2, function(k3, v3) {
-                    if (undefined == tempLogList[k][v3.item]) {
-                        tempLogList[k][v3.item] = {
-                            'sub': 0,
-                            'ocd': 0,
-                            'leve': 0,
-                            'quest': 0
-                        };
-                    }
-                    tempLogList[k][v3.item].quest += parseInt(v3.qty);
-                });
+                tempLogList = standardQuest(tempLogList, k, v2);
             }
         });
     });
