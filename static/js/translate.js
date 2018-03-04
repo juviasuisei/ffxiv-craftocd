@@ -36,8 +36,7 @@ function translateItems(data) {
       'name' : col[1],
       'ring' : col[2],
       'fish' : col[3],
-      'other' : col[4],
-      'api' : col[5]
+      'other' : col[4]
     }
   });
   displayJSON(temp_items);
@@ -162,8 +161,7 @@ function translateCrystals(data) {
   $.each(data.split('\n'), function(k,r) {
     var col = r.split('\t');
     temp_crystals[col[0]] = {
-      'name' : col[1],
-      'api' : col[2]
+      'name' : col[1]
     }
   });
   displayJSON(temp_crystals);
