@@ -44,7 +44,7 @@ function processTable(lvl) {
             if (lvl >= recipeLvl && (lvl - 4) <= recipeLvl) {
                 tempLogList[k][k2] = {
                     'sub': 0,
-                    'ocd': ("1" == items[k2].ring ? 2 : 1),
+                    'ocd': ("1" == items[k2].ring && logs[k][k2].req ? 2 : 1),
                     'leve': 0,
                     'quest': 0,
                 };
@@ -204,7 +204,6 @@ function processTable(lvl) {
 }
 
 function findRecipe(id) {
-console.log(id);
     var recipes = [];
     $.each(logs, function(k, v) {
         $.each(v, function(k2, v2) {
