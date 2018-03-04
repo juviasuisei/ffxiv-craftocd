@@ -223,7 +223,6 @@ function processFive(lvl) {
     $.each(logs, function(k, v) {
         tempLogList[k] = {};
         $.each(v, function(k2, v2) {
-            if(
             var recipeLvl = parseInt(v2.level);
             if (lvl >= recipeLvl && (lvl - 4) <= recipeLvl) {
                 tempLogList[k][k2] = standardLog(k, k2);
