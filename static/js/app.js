@@ -87,12 +87,11 @@ function processStar(lvl) {
             break;
     }
     lvl = parseInt(lvlParts[1]) + lvlDec;
-console.log(lvl);
     $.each(logs, function(k, v) {
         tempLogList[k] = {};
         $.each(v, function(k2, v2) {
             var recipeLvl = parseFloat(v2.level);
-console.log(recipeLvl,items[k2].name);
+console.log(lvl,recipeLvl,lvl == recipeLvl,items[k2].name);
             if (lvl == recipeLvl) {
                 tempLogList[k][k2] = standardLog(k, k2);
             }
@@ -106,6 +105,7 @@ console.log(recipeLvl,items[k2].name);
             }
         });
     });
+console.log(tempLogList);
     var handList = {};
     landList = {};
     $.each(tempLogList, function(k, v) {
