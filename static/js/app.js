@@ -92,7 +92,7 @@ console.log(lvl);
         tempLogList[k] = {};
         $.each(v, function(k2, v2) {
             var recipeLvl = parseFloat(v2.level);
-console.log(recipeLvl,v2.name);
+console.log(recipeLvl,items[k2].name);
             if (lvl == recipeLvl) {
                 tempLogList[k][k2] = standardLog(k, k2);
             }
