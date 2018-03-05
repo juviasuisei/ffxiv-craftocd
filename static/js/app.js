@@ -172,7 +172,7 @@ function buildTable(lvl, tempLogList) {
         if(null != lvlShow.match(/\./)) {
             var lvlParts = lvlShow.match(/(\d+)\.(\d+)/);
             lvlShow = lvlParts[1];
-            while(lvlParts[2] > 0) {
+            while(lvlParts[2]-- > 0) {
                 lvlShow += '&#x2605;';
             }
         }
