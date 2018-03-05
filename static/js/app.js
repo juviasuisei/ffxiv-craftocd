@@ -174,7 +174,7 @@ function buildTable(lvl, tempLogList) {
             lvlShow = lvlParts[1];
             lvlParts[2] = parseInt(lvlParts[2]);
             while(lvlParts[2]-- > 0) {
-                lvlShow += '&#x2605;';
+                lvlShow += '<span class="small">&#x2605;</span>';
             }
         }
         rows += '<td>' + lvlShow + '</td>';
