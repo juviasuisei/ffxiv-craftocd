@@ -168,7 +168,15 @@ function buildTable(lvl, tempLogList) {
     $.each(handArray, function(k, v) {
         rows += '<tr>';
         rows += '<td>' + v.hand + '</td>';
-        rows += '<td>' + logs[v.hand][v.id].level + '</td>';
+        var lvlShow = logs[v.hand][v.id].level.toString();
+        if(null != lvlShow.match(/\./)) {
+            var lvlParts = lvlShow.match(/(\d+)\.(\d+)/);
+            lvlShow = lvlParts[1];
+            while(lvlParts[2] > 0) {
+                lvlShow += '&#x2605;';
+            }
+        }
+        rows += '<td>' + lvlShow + '</td>';
         rows += '<td>';
         rows += '<a href="https://na.finalfantasyxiv.com/lodestone/playguide/db/item/';
         rows += v.id + '/" class="eorzeadb_link">';
