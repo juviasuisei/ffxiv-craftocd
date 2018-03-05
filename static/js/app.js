@@ -86,13 +86,12 @@ function processStar(lvl) {
             lvlDec = .4;
             break;
     }
-    lvl = parseInt(lvlParts[1]) + lvlDec;
+    var lvlFloat = parseInt(lvlParts[1]) + lvlDec;
     $.each(logs, function(k, v) {
         tempLogList[k] = {};
         $.each(v, function(k2, v2) {
             var recipeLvl = parseFloat(v2.level);
-console.log(lvl,recipeLvl,lvl == recipeLvl,items[k2].name);
-            if (lvl == recipeLvl) {
+            if (lvlFloat == recipeLvl) {
                 tempLogList[k][k2] = standardLog(k, k2);
             }
         });
@@ -100,12 +99,11 @@ console.log(lvl,recipeLvl,lvl == recipeLvl,items[k2].name);
     $.each(quests, function(k, v) {
         $.each(v, function(k2, v2) {
             var questLvl = parseFloat(k2);
-            if (lvl == questLvl) {
+            if (lvlFloat == questLvl) {
                 tempLogList = standardQuest(tempLogList, k, v2);
             }
         });
     });
-console.log(tempLogList);
     var handList = {};
     landList = {};
     $.each(tempLogList, function(k, v) {
