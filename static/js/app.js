@@ -87,10 +87,12 @@ function processStar(lvl) {
             break;
     }
     lvl = parseInt(lvlParts[1]) + lvlDec;
+console.log(lvl);
     $.each(logs, function(k, v) {
         tempLogList[k] = {};
         $.each(v, function(k2, v2) {
             var recipeLvl = parseFloat(v2.level);
+console.log(recipeLvl,v2.name);
             if (lvl == recipeLvl) {
                 tempLogList[k][k2] = standardLog(k, k2);
             }
@@ -274,7 +276,6 @@ function processFive(lvl) {
             }
             var leve = parseInt(v2.leve);
             var quest = parseInt(v2.quest);
-console.log(k,v,k2,v2);
             var ocd = (0 == logs[k][k2].req && (0 < leve || 0 < quest) ? 0 : v2.ocd);
             handList[k + k2].ocd = ocd;
             handList[k + k2].leve = leve;
