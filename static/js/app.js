@@ -81,7 +81,6 @@ function process(lvl, range, star) { // build the object of data to be used to g
     var lvlFloat = parseInt(lvlParts[1]) + lvlDec; // create the float version by combining the two parts
   }
   var handList = {}; // the object to be built up
-  lvl = parseInt(lvl); // it should already be an integer, but better safe than sorry
   $.each(logs, function(k, v) { // loop through the crafting logs looking for ones that match
     $.each(v, function(k2, v2) { // loop through each class' data looking for ones that match
       var recipeLvl = parseInt(v2.level); // ensure the level of the recipe is an integer
