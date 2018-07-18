@@ -1,110 +1,175 @@
-$('.tab-pane').each(function(k, v) {
-    var tables = '';
-    tables += '<table class="table table-striped table-condensed land">';
+$('.tab-pane').each(function(k, v) { // populate each of the tabs with the 2 empty tables required
+  var tables = '';
+  tables += '<table class="table table-striped table-condensed land">';
     tables += '<thead>';
-    tables += '<tr>';
-    tables += '<th>Name</th>';
-    tables += '<th>Qty</th>';
-    tables += '<th>Available</th>';
-    tables += '</tr>';
+      tables += '<tr>';
+        tables += '<th>Name</th>';
+        tables += '<th>Qty</th>';
+        tables += '<th>Available</th>';
+      tables += '</tr>';
     tables += '</thead>';
     tables += '<tbody></tbody>';
-    tables += '</table>';
-    tables += '<table class="table table-striped table-condensed hand">';
+  tables += '</table>';
+  tables += '<table class="table table-striped table-condensed hand">';
     tables += '<thead>';
-    tables += '<tr>';
-    tables += '<th>Class</th>';
-    tables += '<th>Level</th>';
-    tables += '<th>Name</th>';
-    tables += '<th>Total</th>';
-    tables += '<th>Ing.</th>';
-    tables += '<th>OCD</th>';
-    tables += '<th>Leve</th>';
-    tables += '<th>Quest</th>';
-    tables += '</tr>';
+      tables += '<tr>';
+        tables += '<th>Class</th>';
+        tables += '<th>Level</th>';
+        tables += '<th>Name</th>';
+        tables += '<th>Total</th>';
+        tables += '<th>Ing.</th>';
+        tables += '<th>OCD</th>';
+        tables += '<th>Leve</th>';
+        tables += '<th>Quest</th>';
+      tables += '</tr>';
     tables += '</thead>';
     tables += '<tbody></tbody>';
-    tables += '</table>';
-    $(this).append(tables);
-    $('table').stickyTableHeaders();
+  tables += '</table>';
+  $(this).append(tables);
+//  $('table').stickyTableHeaders(); // make the table headings sticky
 });
-processTable("5");
+processTable("5"); // default to showing the full data for level 5
 
-$('body').on('click', 'ul li a', function(event) {
-    var lvl = $(this).attr('id').substr(3);
-    processTable(lvl);
+var leftovers = {}; // for use with recipes that make more than 1
+var twinsies = {}; // for use with recipes that can be made by more than 1 class
+var landList = {}; // for use with non-crafting data
+
+$('body').on('click', 'ul li a', function(event) { // only generate the table whenever someone clicks a tab
+  var lvl = $(this).attr('id').substr(3);
+  processTable(lvl);
 });
 
-function processTable(lvl) {
-    if(null == lvl.match(/[ABCD]/)) {
-        processFive(lvl);
-    } else {
-        processStar(lvl);
+function processTable(lvl) { // determine how many levels to process
+  if(null == lvl.match(/[ABCD]/)) { // check for star classification
+    if(lvl > 50) { // after 50 the gaps are no longer every 5
+      switch(lvl.toString().substring(1)) { // check the second digit to determine which type
+        case '3':
+        case '8':
+          process(lvl, 3, false); // e.g., 51-53, 56-58
+          break;
+        case '5':
+        case '0':
+          process(lvl, 2, false); // e.g., 54-55, 59-60
+          break;
+      }
+    } else { // 50 and before 50 it goes in sets of five
+      process(lvl, 5, false); // e.g., 1-5, 6-10
     }
+  } else { // if it is a star classification
+    process(lvl, 0, true); // special consideration is given regarding the number of stars
+  }
 }
 
-function standardLog(k, k2) {
-    var blankLog = {
-        'sub': 0,
-        'ocd': ("1" == items[k2].ring && logs[k][k2].req ? 2 : 1),
-        'leve': 0,
-        'quest': 0,
-    };
-    return(blankLog);
-}
-
-function standardQuest(data, k, v2) {
-    $.each(v2, function(k3, v3) {
-        if (undefined == data[k][v3.item]) {
-            data[k][v3.item] = {
-                'sub': 0,
-                'ocd': 0,
-                'leve': 0,
-                'quest': 0
-            };
-        }
-        data[k][v3.item].quest += parseInt(v3.qty);
+function process(lvl, range, star) { // build the object of data to be used to generate the table
+  if(true == star) { // get the dot version of the star levels
+    var lvlParts = lvl.match(/(\d+)([ABCD])/); // split apart the digits from the designation
+    var lvlDec = ''; // default value in case it failes
+    switch(lvlParts[2]) { // the second half of the regex results has the designation
+      case 'A':
+        lvlDec = .1;
+        break;
+      case 'B':
+        lvlDec = .2;
+        break;
+      case 'C':
+        lvlDec = .3;
+        break;
+      case 'D':
+        lvlDec = .4;
+        break;
+    }
+    var lvlFloat = parseInt(lvlParts[1]) + lvlDec; // create the float version by combining the two parts
+  }
+  var handList = {}; // the object to be built up
+  lvl = parseInt(lvl); // it should already be an integer, but better safe than sorry
+  $.each(logs, function(k, v) { // loop through the crafting logs looking for ones that match
+    $.each(v, function(k2, v2) { // loop through each class' data looking for ones that match
+      var recipeLvl = parseInt(v2.level); // ensure the level of the recipe is an integer
+      var recipeLvlFloat = parseFloat(v2.level); // create the float version as well
+      if((true == star && lvlFloat == recipeLvlFloat) || // if it is a star it should be an exact match OR
+        (lvl >= recipeLvl && // high end of the range we're looking for
+        (lvl - range + 1) <= recipeLvl && // low end of the range we're looking for
+        -1 == v2.level.indexOf('.'))) { // this recipe isn't a star recipe (parseInt will deceptively turn those into what look like regular recipes)
+        handList[k + k2] = standardLog(); // generate an empty record
+        handList[k + k2].hand = k; // set the class
+        handList[k + k2].id = k2; // set the lodestone ID
+        handList[k + k2].ocd = ("1" == items[k2].ring && logs[k][k2].req ? 2 : 1) // set the OCD value (2 if it is a ring; otherwise 1)
+      }
     });
-    return(data);
-}
-
-function buildTable(lvl, tempLogList) {
-    var handList = {};
-    landList = {};
-    $.each(tempLogList, function(k, v) {
-        $.each(v, function(k2, v2) {
-            if (undefined == handList[k + k2]) {
-                handList[k + k2] = {
-                    'hand': k,
-                    'id': k2,
-                    'sub': 0,
-                    'ocd': 0,
-                    'leve': 0,
-                    'quest': 0
-                };
+  });
+  $.each(leves, function(k, v) { // loop through the leves looking for ones that match
+    $.each(v.items, function(k2, v2) { // leves are organized by leve giver; loop through each giver's data
+      var leveLvl = parseInt(k2); // ensure the level of the leve is an integer
+      var leveLvlFloat = parseFloat(k2); // create the flaot version as well
+      if((true == star && lvlFloat == leveLvlFloat) || // if it is a star it should be an exact match OR
+        (lvl > leveLvl && // high end of the range we're looking for
+        (lvl - range) <= leveLvl)) { // low end of the range we're looking for
+        $.each(v2, function(k3, v3) { // levels of a leve giver are organized by class; loop through each class' data
+          $.each(v3, function(k4, v4) { // each class has multiple leve turn-ins; loop through each turn-in to add it
+            if(undefined == handList[k3 + v4.item]) { // if this item is not in the list generated above instantiate a blank sub-object for the item
+              handList[k3 + v4.item] = standardLog(); // generate an empty record
+              handList[k3 + v4.item].hand = k3; // set the class
+              handList[k3 + v4.item].id = v4.item; // set the lodestone ID
             }
-            var leve = parseInt(v2.leve);
-            var quest = parseInt(v2.quest);
-            var ocd = (0 == logs[k][k2].req && (0 < leve || 0 < quest) ? 0 : v2.ocd);
-            handList[k + k2].ocd = ocd;
-            handList[k + k2].leve = leve;
-            handList[k + k2].quest = quest;
-            handList = processRecipe(handList, k, k2, Math.ceil((ocd + leve + quest) / logs[k][k2].qty), true);
+            handList[k3 + v4.item].leve += parseInt(v4.qty); // increase the current item's leve quantity
+          });
         });
+      }
     });
-    $.each(handList, function(k, v) {
-        if (0 != v.ocd && 0 == logs[v.hand][v.id].req && (0 < v.sub || 0 < v.leve || 0 < v.quest)) {
-            handList[k].ocd = 0;
-            handList = processRecipe(handList, v.hand, v.id, 1, false);
-        }
+  });
+  $.each(quests, function(k, v) { // loop thorugh the quests looking for ones that match
+    $.each(v, function(k2, v2) { // quests are organized by class; loop through each class' data
+      var questLvl = parseInt(k2); // ensure the level of the quest is an integer
+      var questLvlFloat = parseFloat(k2); // create the float version as well
+      if((true == star && lvlFloat == questLvlFloat) || // if it is a star it should be an exact match OR
+        (false == star && // not a star
+        lvl >= questLvl && // high end of the range we're looking for
+        (lvl - range + 1) <= questLvl)) { // low end of the range we're looking for
+        $.each(v2, function(k3, v3) { // each level of a quest can have multiple turn-ins; loop through each turn-in to add it
+          if(undefined == handList[k + v3.item]) { // if this item is not in the list generated above instantiate a blank sub-object for the item
+            handList[k + v3.item] = standardLog(); // generate an empty record
+            handList[k + v3.item].hand = k; // set the class
+            handList[k + v3.item].id = v3.item; // set the lodestone ID
+          }
+          handList[k + v3.item].quest += parseInt(v3.qty); // increase the current item's quest quantity
+        });
+      }
     });
-    var landArray = Object.keys(landList).map(function(k) {
-        return [k, landList[k]];
-    });
+  });
+  leftovers = {}; // blank out leftovers
+  twinsies = {}; // blank out twinsies
+  landList = {}; // blank out the land list
+  $.each(handList, function(k, v) { // loop through all the crafting logs
+    handList[k].ocd = (0 == logs[v.hand][v.id].req && (0 < v.leve || 0 < v.quest) ? 0 : v.ocd); // if the item wasn't required and a leve or quest requires it, reset OCD to 0
+    var total = v.ocd + v.leve + v.quest; // shortcut for total needed
+    var produced = parseInt(logs[v.hand][v.id].qty); // shortcut for total produced
+    var needed = Math.ceil(total/produced); // shortcut for total crafts required
+    if(1 < produced) { // if this item produces more than 1
+      leftovers[k] = { 'left' : (needed * produced) - total, 'qty' : produced }; // add it to the tracker
+    }
+    handList = processRecipe(handList, v.hand, v.id, needed, true); // process the recipe for the amount needed
+  });
+  $.each(handList, function(k, v) { // loop through one last time to back out of any OCD items that are no longer needed
+    if(0 != v.ocd && // if the item was being done for OCD
+      0 == logs[v.hand][v.id].req && // and it isn't required
+      0 < v.sub) { // and it ended up being used as a sub-item in another recipe
+        handList = processRecipe(handList, v.hand, v.id, v.ocd, false); // re-process the recipe removing the instance crafted just for OCD
+        handList[k].ocd = 0; // set its OCD value back to 0
+    }
+  });
+
+  // all the below is not yet commented but works as intended; basically the objects get flipped into arrays and then looped through writing out table rows
+  // this definitely seems like it could be made more efficient
+  var landArray = Object.keys(landList).map(function(k) {
+    return [k, landList[k]];
+  });
     landArray.sort(function(a, b) {
         return b[1] - a[1];
     });
-    var rows = ''
+
+
+
+  var rows = ''
     $.each(landArray, function(k, v) {
         var item = findItem(v[0]);
         rows += '<tr>';
@@ -192,178 +257,117 @@ function buildTable(lvl, tempLogList) {
     $('#lvl' + lvl + ' .hand tbody').empty().append(rows);
 }
 
-function processStar(lvl) {
-    var tempLogList = {};
-    var lvlParts = lvl.match(/(\d+)([ABCD])/);
-    var lvlDec = 0;
-    switch(lvlParts[2]) {
-        case 'A':
-            lvlDec = .1;
-            break;
-        case 'B':
-            lvlDec = .2;
-            break;
-        case 'C':
-            lvlDec = .3;
-            break;
-        case 'D':
-            lvlDec = .4;
-            break;
-    }
-    var lvlFloat = parseInt(lvlParts[1]) + lvlDec;
-    $.each(logs, function(k, v) {
-        tempLogList[k] = {};
-        $.each(v, function(k2, v2) {
-            var recipeLvl = parseFloat(v2.level);
-            if (lvlFloat == recipeLvl) {
-                tempLogList[k][k2] = standardLog(k, k2);
-            }
-        });
-    });
-    $.each(quests, function(k, v) {
-        $.each(v, function(k2, v2) {
-            var questLvl = parseFloat(k2);
-            if (lvlFloat == questLvl) {
-                tempLogList = standardQuest(tempLogList, k, v2);
-            }
-        });
-    });
-    buildTable(lvl, tempLogList);
-}
-
-function processFive(lvl) {
-    var tempLogList = {};
-    lvl = parseInt(lvl);
-    $.each(logs, function(k, v) {
-        tempLogList[k] = {};
-        $.each(v, function(k2, v2) {
-            var recipeLvl = parseInt(v2.level);
-            if (lvl >= recipeLvl && (lvl - 4) <= recipeLvl && -1 == v2.level.indexOf('.')) {
-                tempLogList[k][k2] = standardLog(k, k2);
-            }
-        });
-    });
-    $.each(leves, function(k, v) {
-        $.each(v.items, function(k2, v2) {
-            var leveLvl = parseInt(k2);
-            if (lvl > leveLvl && (lvl - 5) <= leveLvl) {
-                $.each(v2, function(k3, v3) {
-                    $.each(v3, function(k4, v4) {
-                        if (undefined == tempLogList[k3][v4.item]) {
-                            tempLogList[k3][v4.item] = {
-                                'sub': 0,
-                                'ocd': 0,
-                                'leve': 0,
-                                'quest': 0
-                            };
-                        }
-                        tempLogList[k3][v4.item].leve += parseInt(v4.qty);
-                    });
-                });
-            }
-        });
-    });
-    $.each(quests, function(k, v) {
-        $.each(v, function(k2, v2) {
-            var questLvl = parseInt(k2);
-            if (lvl >= questLvl && (lvl - 4) <= questLvl) {
-                tempLogList = standardQuest(tempLogList, k, v2);
-            }
-        });
-    });
-    buildTable(lvl, tempLogList);
-}
-
-function findRecipe(id) {
-    var recipes = [];
-    $.each(logs, function(k, v) {
-        $.each(v, function(k2, v2) {
-            if (id == k2) {
-                recipes.push(k);
-                return false;
-            }
-        });
-    });
-    return (recipes);
+function standardLog() { // used when generating a blank record in the crafting log
+    var blankLog = {
+        'hand' : '', // crafting class of the item
+        'id' : '', // lodestone ID of the item
+        'sub': 0, // how many are needed because it is a prerequisite ingredient
+        'ocd': 0, // how many are needed for OCD
+        'leve': 0, // how many are needed for relevant leves
+        'quest': 0, // how many are needed for relevant quests
+    };
+    return(blankLog);
 }
 
 function processRecipe(data, type, log, qty, add) {
-    $.each(logs[type][log].ingredients, function(k, v) {
-        var subQty = parseInt(v) * qty;
-        var recipes = findRecipe(k);
-        var rlen = recipes.length;
-        if (0 < rlen) {
-            while (subQty > 0) {
-                $.each(recipes, function(k2, v2) {
-                    if (undefined == data[v2 + k]) {
-                        data[v2 + k] = {
-                            'hand': v2,
-                            'id': k,
-                            'sub': 0,
-                            'ocd': 0,
-                            'leve': 0,
-                            'quest': 0
-                        }
-                    }
+  $.each(logs[type][log].ingredients, function(k, v) { // loop through all the ingredients in the item being processed
+    var subQty = parseInt(v) * qty; // get the true number needed of the ingredient
+    var recipes = findRecipe(k); // locate all instances of the ingredient
+    var rlen = recipes.length; // length is used enough it should be calculated once for efficiency
+    if(0 < rlen) { // if the array isn't empty it means it can be crafted
+      $.each(recipes, function(k2, v2) { // loop through the recipes
+        if(undefined == data[v2 + k]) { // if this item is not in the list generated above instantiate a blank sub-object for the item
+          data[v2 + k] = standardLog(); // generate an empty record
+          data[v2 + k].hand = v2; // set the class
+          data[v2 + k].id = k; // set the lodestone ID
+        }
+      });
+      while(subQty-- > 0) { // process each sub quantity one at a time
+        var loopid = recipes[0] + k; // default to using the first item in the recipes results
+        var produced = logs[recipes[0]][k].qty; // default to using the first item in the recipe results' quantity produced
+        if(rlen > 1) { // if there is more than one recipe keep it balanced
+          loopid = twinsies[k].types[twinsies[k].pointer] + k; // use the recipe being pointed to
+          produced = logs[twinsies[k].types[twinsies[k].pointer]][k].qty; // use the quantity produced of the recipe being pointed to
+          twinsies[k].pointer = (twinsies[k].pointer + 1) % twinsies[k].modulus; // update the pointer to the next item
+        }
+        if(undefined != leftovers[loopid]) { // check if this is an item that produces more than 1
+          if(0 < leftovers[loopid].left) { // if there are items leftover from the last crafting
+            if(true == add) { // if this is an addition process
+              data[loopid].sub++; // add one to the sub-ingredient counter
+              leftovers[loopid].left--; // use up one of the leftovers
+            } else { // if this is a subtraction process
+              data[loopid].sub--; // remove one from the sub-ingredient counter
+              leftovers[loopid].left++; // add back a leftover
+              if(leftovers[loopid].left == leftovers[loopid].qty) { // if this caused us to have an entire craft's worth leftover
+                data = processRecipe(data, loopid.substr(0,3), loopid.substr(3), 1, false); // incept, removing one craft's worth of that ingredient
+              }
+            }
+          } else { // if there are no items left over from the last crafting
+            if(true == add) { // if this is an addition process
+              data[loopid].sub++; // add one to the sub-ingredient counter
+              leftovers[loopid].left = leftovers[loopid].qty - 1; // reset the tracker but use up one
+              data = processRecipe(data, loopid.substr(0,3), loopid.substr(3), 1, true); // incept, adding one craft's worth of that ingredient
+            } else { // if this is a subtraction process
+              data[loopid].sub--; // remove one from the sub-ingredient counter
+              leftovers[loopid].left++; // add back a leftover
+            }
+          }
+        } else { // if this is an item that only produces one
+          if(true == add) { // if this is an addition process
+            data[loopid].sub++; // add one to the sub-ingredient counter
+          } else { // if this is a subtraction process
+            data[loopid].sub--; // remove one from the sub-ingredient counter
+          }
+          data = processRecipe(data, loopid.substr(0,3), loopid.substr(3), 1, add); // incept, processing the change in sub-ingredient counts
+        }
+      }
+    } else { // this is an item that cannot be crafted
+      if(undefined == landList[k]) { // check if this is already in the land list
+        landList[k] = 0; // instantiate it if not
+      }
+      if(true == add) { // if this is an addition process
+        landList[k] += subQty; // add the sub quantity to the land tracker
+      } else { // if this is a substraction process
+        landList[k] -= subQty; // remove the sub quantity from the land tracker
+      }
+    }
+  });
+  $.each(logs[type][log].crystals, function(k, v) { // loop through all the crystals in the item being processed
+    subQty = parseInt(v) * qty; // get the true number needed of the crystal
+    if(undefined == landList[k]) { // check if this is already in the land list
+      landList[k] = 0; // instantiate it if not
+    }
+    if(true == add) { // if this is an addition process
+      landList[k] += subQty; // add the sub quantity to the land tracker
+    } else { // if this is a substraction process
+      landList[k] -= subQty; // remove the sub quantity from the land tracker
+    }
+  });
+  return(data); // return the modified data
+}
 
-                    if(rlen > 1) {
-                      var gut = data[v2 + k].sub;
-                      var litmus = true;
-                      $.each(recipes, function(k3,v3) {
-                        if(v3 == v2) {
-                          return true;
-                        } else if(undefined == data[v3 + k]) {
-                          data[v3 + k] = {
-                              'hand': v3,
-                              'id': k,
-                              'sub': 0,
-                              'ocd': 0,
-                              'leve': 0,
-                              'quest': 0
-                          }
-                          litmus = false;
-                        } else if((data[v2 + k].sub - data[v3 + k].sub) > 1) {
-                          litmus = false;
-                        }
-                      });
-                      if(false == litmus) {
-                        return true;
-                      }
-                    }
-
-                    if (subQty-- > 0) {
-                        if (add) {
-                            data[v2 + k].sub += 1;
-                        } else {
-                            data[v2 + k].sub -= 1;
-                        }
-                        data = processRecipe(data, v2, k, 1, add);
-                    }
-                });
-            }
-        } else {
-            if (undefined == landList[k]) {
-                landList[k] = 0;
-            }
-            if (add) {
-                landList[k] += subQty;
-            } else {
-                landList[k] -= subQty;
-            }
+function findRecipe(id) {
+  var recipes = []; // instantiate an empty return array
+  $.each(logs, function(k, v) { // loop through all the classes
+    $.each(v, function(k2, v2) { // loop through all the recipes in a class
+      if(id == k2) { // if the recipe ID matches
+        recipes.push(k); // add it to the array
+        if(1 < parseInt(v2.qty) && undefined == leftovers[k + k2]) { // if the recipe produces more than 1 and it isn't already in the leftovers tracker
+          leftovers[k + k2] = { 'left' : 0, 'qty' : parseInt(v2.qty) }; // instantiate the tracker
         }
+        return false; // stop looping through this class because there should only be a maximum of one per class
+      }
     });
-    $.each(logs[type][log].crystals, function(k, v) {
-        subQty = parseInt(v) * qty;
-        if (undefined == landList[k]) {
-            landList[k] = 0;
-        }
-        if (add) {
-            landList[k] += subQty;
-        } else {
-            landList[k] -= subQty;
-        }
-    });
-    return (data);
+  });
+  if(1 < recipes.length) { // if there is more than one result ensure it is in the twinsies tracker
+    if(undefined == twinsies[id]) { // if it doesn't exist already in the tracker
+      twinsies[id] = { 'types' : [], 'pointer' : 0, 'modulus' : recipes.length }; // instantiate the tracker
+      $.each(recipes, function(k, v) { // loop through the found recipes populating it
+        twinsies[id].types.push(v); // add the class
+      });
+    }
+  }
+  return (recipes); // return the recipes array
 }
 
 function findItem(id) {
