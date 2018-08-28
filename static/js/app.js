@@ -98,9 +98,8 @@ function process(lvl, range, star) { // build the object of data to be used to g
   });
   $.each(leves, function(k, v) { // loop through the leves looking for ones that match
     $.each(v.items, function(k2, v2) { // leves are organized by leve giver; loop through each giver's data
-      var leveLvl = parseInt(k2); // ensure the level of the leve is an integer
-      var leveLvlFloat = parseFloat(k2); // create the flaot version as well
-      if((true == star && lvlFloat == leveLvlFloat) || // if it is a star it should be an exact match OR
+      var leveLvl = parseFloat(k2); // ensure the level of the leve is a float
+      if((true == star && lvlFloat == leveLvl) || // if it is a star it should be an exact match OR
         (lvl > leveLvl && // high end of the range we're looking for
         (lvl - range) <= leveLvl)) { // low end of the range we're looking for
         $.each(v2, function(k3, v3) { // levels of a leve giver are organized by class; loop through each class' data
@@ -118,9 +117,8 @@ function process(lvl, range, star) { // build the object of data to be used to g
   });
   $.each(quests, function(k, v) { // loop thorugh the quests looking for ones that match
     $.each(v, function(k2, v2) { // quests are organized by class; loop through each class' data
-      var questLvl = parseInt(k2); // ensure the level of the quest is an integer
-      var questLvlFloat = parseFloat(k2); // create the float version as well
-      if((true == star && lvlFloat == questLvlFloat) || // if it is a star it should be an exact match OR
+      var questLvl = parseFloat(k2); // ensure the level of the quest is a float
+      if((true == star && lvlFloat == questLvl) || // if it is a star it should be an exact match OR
         (false == star && // not a star
         lvl >= questLvl && // high end of the range we're looking for
         (lvl - range + 1) <= questLvl)) { // low end of the range we're looking for
